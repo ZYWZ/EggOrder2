@@ -24,7 +24,7 @@
 <script>
 $(function() {
 	
-	var event = [
+/*	var event = [
         {
 	          title: 'Business Lunch',
 	          start: '2018-10-03T13:00:00',
@@ -60,13 +60,22 @@ $(function() {
         overlap: false,
         rendering: 'background',
         color: '#ff9f89'
-      });
-	
-/*	var event = [
-		{
-			
-		}
-	]*/
+      });*/
+      
+      var event = [];
+      var results = ${result};
+      console.log(results);
+      
+      for (var result in results) {
+        //  alert("Value:" + results[result].studentId);
+          event.push({
+        	  title: 'Study',
+        	  start: results[result].startTime,
+        	  end: results[result].finishTime,
+        	  student: results[result].studentId,
+        	  classroom: results[result].classroomId,
+      	  })
+      }
 	
 	
 	  // page is now ready, initialize the calendar...
@@ -87,6 +96,9 @@ $(function() {
 	      eventMouseover: function(event){
 	    	    var Student = event.Student; 
 			    var Classroom = event.Classroom;
+		  },
+		  eventClick: function(eventObj) {
+		      alert('Booked by Student : ' + eventObj.student);
 		  }
 	  	  /*select: function(startDate, endDate) {
           	alert('selected ' + startDate.format() + ' to ' + endDate.format());
@@ -168,7 +180,6 @@ $(function() {
  				<c:out value="${book.finishTime}"/> 
  				<br><br>
  			</c:forEach>--> 
- 			<h3>${result.get(0).getStudentId()}</h3>
     	<div id='calendar'></div>
     
     </main>

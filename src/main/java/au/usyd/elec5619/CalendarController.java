@@ -22,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.google.gson.Gson;
+
 import au.usyd.elec5619.dao.BookingDao;
 import au.usyd.elec5619.domain.Booking;
 import au.usyd.elec5619.service.BookingService;
@@ -94,9 +96,9 @@ public class CalendarController {
         Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
         query.setInteger("classroomid", 123456);
         List<Booking> result = (List<Booking>)query.list();
-        System.out.println(result.size());
         
-        model.addAttribute("result", result);
+        String json = new Gson().toJson(result);
+        model.addAttribute("result", json);
         
         return "calendar";
     }
