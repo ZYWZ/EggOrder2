@@ -21,94 +21,6 @@
   <link href="resources/dashboard.css" rel="stylesheet">
 
 
-<script>
-$(function() {
-	
-/*	var event = [
-        {
-	          title: 'Business Lunch',
-	          start: '2018-10-03T13:00:00',
-	          constraint: 'businessHours',
-	          Student: '1111',
-	          Classroom: '123456'
-	        },
-	        {
-	          title: 'Meeting',
-	          start: '2018-10-13T11:00:00',
-	          constraint: 'availableForMeeting', // defined below
-	          color: '#257e4a',
-	          Student: '1111',
-		      Classroom: '123456'
-	        },
-	        {
-	          title: 'Conference',
-	          start: '2018-10-18',
-	          end: '2018-10-20',
-	          Student: '1111',
-		      Classroom: '123456'
-	        }];
-	event.push({
-        start: '2018-10-24',
-        end: '2018-10-28',
-        overlap: false,
-        rendering: 'background',
-        color: '#ff9f89'
-      },
-      {
-        start: '2018-10-06',
-        end: '2018-10-08',
-        overlap: false,
-        rendering: 'background',
-        color: '#ff9f89'
-      });*/
-      
-      var event = [];
-      var results = ${result};
-      console.log(results);
-      
-      for (var result in results) {
-        //  alert("Value:" + results[result].studentId);
-          event.push({
-        	  title: 'Study',
-        	  start: results[result].startTime,
-        	  end: results[result].finishTime,
-        	  student: results[result].studentId,
-        	  classroom: results[result].classroomId,
-      	  })
-      }
-	
-	
-	  // page is now ready, initialize the calendar...
-
-	  $('#calendar').fullCalendar({
-		  selectable: true,
-		  header: {
-			  left:   'month,agendaWeek,agendaDay',
-			  center: 'title',
-			  right:  'today prev,next',
-		  },
-		  nowIndicator: true,
-		  events: event,
-		  eventRender: function(event, element, view){
-			    var Student = event.Student; 
-			    var Classroom = event.Classroom;			    
-	      },
-	      eventMouseover: function(event){
-	    	    var Student = event.Student; 
-			    var Classroom = event.Classroom;
-		  },
-		  eventClick: function(eventObj) {
-		      alert('Booked by Student : ' + eventObj.student);
-		  }
-	  	  /*select: function(startDate, endDate) {
-          	alert('selected ' + startDate.format() + ' to ' + endDate.format());
-          }*/
-	  })
-
-	});
-</script>
-
-
 </head>
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -168,19 +80,24 @@ $(function() {
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Calendar</h1>
+            <h1 class="h2">Map</h1>
           </div>
           
-    <!--     <h3>Bookings</h3>
- 			<c:forEach items="${model.bookings}" var="book">
- 				<c:out value="${book.studentId}"/> 
- 				<i>$<c:out value="${book.classroomId}"/></i> 
- 				<c:out value="${book.bookingDate}"/>
- 				<c:out value="${book.startTime}"/> 
- 				<c:out value="${book.finishTime}"/> 
- 				<br><br>
- 			</c:forEach>--> 
-    	<div id='calendar'></div>
+    <div id="googleMap" style="width:800px;height:400px;"></div>
+
+<script>
+function myMap() {
+  var mapProp= {
+      center:new google.maps.LatLng(-33.8871248,151.1879795),
+      zoom:16,
+  };
+  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  var marker = new google.maps.Marker({position:mapProp.center});
+  marker.setMap(map);
+}
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5pmkDGxqdja_kT9ALjpxvrKvhOZQzu5I&callback=myMap"></script>
     
     </main>
 	</div>
@@ -192,5 +109,3 @@ $(function() {
     </script>
 </body>
 </html>
-
-
