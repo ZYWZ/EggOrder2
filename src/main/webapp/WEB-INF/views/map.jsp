@@ -19,7 +19,23 @@
 
 <link rel="stylesheet" href="resources/bootstrap-4.1.3-dist/css/bootstrap.min.css"/>
   <link href="resources/dashboard.css" rel="stylesheet">
+<style>
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
 
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+</style>
 
 </head>
 <body>
@@ -84,18 +100,53 @@
           </div>
           
     <div id="googleMap" style="width:800px;height:400px;"></div>
+    
+    <div id="classrooms"></div>
 
 <script>
+var classrooms = ${classrooms};
+var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th></tr>";
+
+classrooms.forEach(function(classroom) {
+	text += "<tr>";
+	text += "<td>";
+	text += classroom["classroomName"];
+	text += "</td>";
+	text += "<td>";
+	text += classroom["classroomSize"];
+	text += "</td>";
+	text += "<td>";
+	text += classroom["address"];
+	text += "</td>";
+	text += "</tr>";
+});
+text += "</table>";
+
+document.getElementById("classrooms").innerHTML = text;
+
 function myMap() {
   var mapProp= {
-      center:new google.maps.LatLng(-33.8871248,151.1879795),
+      center:new google.maps.LatLng(-33.8862248,151.1878795),
       zoom:16,
   };
   var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-  var marker = new google.maps.Marker({position:mapProp.center});
-  marker.setMap(map);
+  classrooms.forEach(function(classroom) {
+	  var marker = new google.maps.Marker({position:new google.maps.LatLng(parseLat(classroom),parseLNg(classroom))});
+	  marker.setMap(map);
+  });
 }
+
+function parseLat(classroom) {
+	return parseFloat(classroom["location"].split(',')[0]);
+}
+function parseLNg(classroom) {
+	return parseFloat(classroom["location"].split(',')[1]);
+}
+
+
 </script>
+
+
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5pmkDGxqdja_kT9ALjpxvrKvhOZQzu5I&callback=myMap"></script>
     
