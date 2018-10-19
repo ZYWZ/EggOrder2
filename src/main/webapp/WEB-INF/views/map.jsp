@@ -44,6 +44,11 @@ tr:nth-child(even) {
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
+          <a class="nav-link" onclick="SearchOnClick()">Search</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
           <a class="nav-link" href="#">Sign in</a>
         </li>
       </ul>
@@ -105,31 +110,48 @@ tr:nth-child(even) {
 
 <script>
 var classrooms = ${classrooms};
-var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th></tr>";
 
-classrooms.forEach(function(classroom) {
-	text += "<tr>";
-	text += "<td>";
-	text += classroom["classroomName"];
-	text += "</td>";
-	text += "<td>";
-	text += classroom["classroomSize"];
-	text += "</td>";
-	text += "<td>";
-	text += classroom["address"];
-	text += "</td>";
-	text += "</tr>";
-});
-text += "</table>";
+buildClassroomsTable(classrooms);
 
-document.getElementById("classrooms").innerHTML = text;
+function SearchOnClick() {
+	var classroomName = document.getElementsByTagName("input")[0].value;
+	console.log(classroomName);
+	classrooms.forEach(function(classroom) {
+		if (classroom["classroomName"] == classroomName) {
+			updateMarkerOnMap(classroom);
+			buildClassroomsTable([classroom]);
+		}
+	});
+	
+}
+
+function buildClassroomsTable(classrooms) {
+	var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th></tr>";
+
+	classrooms.forEach(function(classroom) {
+		text += "<tr>";
+		text += "<td>";
+		text += classroom["classroomName"];
+		text += "</td>";
+		text += "<td>";
+		text += classroom["classroomSize"];
+		text += "</td>";
+		text += "<td>";
+		text += classroom["address"];
+		text += "</td>";
+		text += "</tr>";
+	});
+	text += "</table>";
+
+	document.getElementById("classrooms").innerHTML = text;
+}
 
 function myMap() {
   var mapProp= {
       center:new google.maps.LatLng(-33.8862248,151.1878795),
       zoom:16,
   };
-  var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
   classrooms.forEach(function(classroom) {
 	  var marker = new google.maps.Marker({position:new google.maps.LatLng(parseLat(classroom),parseLNg(classroom))});
 	  marker.setMap(map);
@@ -141,6 +163,16 @@ function parseLat(classroom) {
 }
 function parseLNg(classroom) {
 	return parseFloat(classroom["location"].split(',')[1]);
+}
+
+function updateMarkerOnMap(classroom) {
+	var mapProp= {
+		center:new google.maps.LatLng(-33.8862248,151.1878795),
+		zoom:16,
+	};
+	var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+	var marker = new google.maps.Marker({position:new google.maps.LatLng(parseLat(classroom),parseLNg(classroom)), animation:google.maps.Animation.BOUNCE});
+	marker.setMap(map);
 }
 
 
