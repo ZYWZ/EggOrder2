@@ -96,7 +96,7 @@ public class CalendarController {
         
         // HQL (Hibernate Query Language)
         Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
-        query.setInteger("classroomid", 123456);
+        query.setInteger("classroomid", 0);
         List<Booking> result = (List<Booking>)query.list();
         
         String json = new Gson().toJson(result);
@@ -105,7 +105,7 @@ public class CalendarController {
         return "calendar";
     }
     
-    @RequestMapping(value = "/calendar{Id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.GET)
     public String hibernateQueryWithClassroomID(Locale locale, Model model, @PathVariable int Id) {
         
         // HQL (Hibernate Query Language)
@@ -120,20 +120,20 @@ public class CalendarController {
         return "calendar";
     }
     
-    @RequestMapping(value = "/calendarAdd", method = RequestMethod.POST)
-    public String AddEvent(Locale locale, Model model, @RequestParam("studentID") int studentID,@RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime) {
+    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST)
+    public String AddEvent(Locale locale, Model model, @PathVariable int Id, @RequestParam("studentID") int studentID,@RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime) {
         String st = startTime.toString().replaceAll("T", " ")+":00";
         String ft = finishTime.toString().replaceAll("T", " ")+":00";
         
         Booking temp = new Booking();
         temp.setStudentId(studentID);
-        temp.setClassroomId(123456);
+        temp.setClassroomId(Id);
         temp.setBookingDate("2018-10-12");
         temp.setStartTime(st);
         temp.setFinishTime(ft);
         
         bookingService.registerBooking(temp);
         
-        return "calendar";
+        return "redirect:"+Id;
     }
 }
