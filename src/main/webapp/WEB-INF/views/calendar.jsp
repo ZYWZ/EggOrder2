@@ -18,50 +18,20 @@
 
 
 <link rel="stylesheet" href="resources/bootstrap-4.1.3-dist/css/bootstrap.min.css"/>
-  <link href="resources/dashboard.css" rel="stylesheet">
-
+<link href="resources/dashboard.css" rel="stylesheet">
 
 <script>
-$(function() {
-	
-/*	var event = [
-        {
-	          title: 'Business Lunch',
-	          start: '2018-10-03T13:00:00',
-	          constraint: 'businessHours',
-	          Student: '1111',
-	          Classroom: '123456'
-	        },
-	        {
-	          title: 'Meeting',
-	          start: '2018-10-13T11:00:00',
-	          constraint: 'availableForMeeting', // defined below
-	          color: '#257e4a',
-	          Student: '1111',
-		      Classroom: '123456'
-	        },
-	        {
-	          title: 'Conference',
-	          start: '2018-10-18',
-	          end: '2018-10-20',
-	          Student: '1111',
-		      Classroom: '123456'
-	        }];
-	event.push({
-        start: '2018-10-24',
-        end: '2018-10-28',
-        overlap: false,
-        rendering: 'background',
-        color: '#ff9f89'
-      },
-      {
-        start: '2018-10-06',
-        end: '2018-10-08',
-        overlap: false,
-        rendering: 'background',
-        color: '#ff9f89'
-      });*/
-      
+window.onload = function() {
+    var now = new Date();
+    var utcString = now.toISOString().substring(0,19);
+    var hour = now.getHours();
+    var localDatetime = utcString.substring(0,11) + (hour < 10 ? "0" + hour : hour) + utcString.substring(13,19);
+    var datetimeField = document.getElementById("myDatetimeField");
+    datetimeField.value = localDatetime;
+}
+
+
+$(function() {     
       var event = [];
       var results = ${result};
       console.log(results);
@@ -103,20 +73,75 @@ $(function() {
 	  	  /*select: function(startDate, endDate) {
           	alert('selected ' + startDate.format() + ' to ' + endDate.format());
           }*/
-	  })
+	  });  
+	  
+});
 
-	});
+$(document).ready(function() {
+    $('#notEmptyForm').bootstrapValidator({
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            studentID: {
+                validators: {
+                    notEmpty: {
+                        message: 'The full name is required'
+                    }
+                }
+            }
+        }
+    });
+});
+	
+
 </script>
 
 
 </head>
 <body>
+<!-- Add booking Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4><span class="glyphicon glyphicon-lock"></span>Add a booking</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>         
+        </div>
+        <div class="modal-body">
+          <form role="form" method="post" id="notEmptyForm" action="calendarAdd" >
+          	<div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span>Student ID</label>
+              	<input type="text" class="form-control" name="studentID" data-bv-notempty data-bv-notempty-message="Please input the student ID">
+            </div>
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span>Input your start time</label>
+              	<input type="datetime-local" id="myDatetimeField" class="form-control" name="startTime">
+            </div>
+            <div class="form-group">
+              <label for="usrname"><span class="glyphicon glyphicon-user"></span>Input your finish time</label>
+              <input type="datetime-local" class="form-control" name="finishTime" placeholder="YYYY-MM-DD HH-MM-SS">
+            </div>
+            <hr/>
+              <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Submit</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+<!-- End of Add booking Modal -->
+
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/elec5619">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign in</a>
+          <a class="nav-link" href="signin">Sign in</a>
         </li>
       </ul>
     </nav>
@@ -157,7 +182,7 @@ $(function() {
                 </a>
               </li>         
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="analyze">
                   <span data-feather="bar-chart-2"></span>
                   Analyze
                 </a>
@@ -168,18 +193,12 @@ $(function() {
         </nav>
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Calendar</h1>
+            <h1 class="h2">Calendar for classroom ${classroomID}</h1>
           </div>
-          
-    <!--     <h3>Bookings</h3>
- 			<c:forEach items="${model.bookings}" var="book">
- 				<c:out value="${book.studentId}"/> 
- 				<i>$<c:out value="${book.classroomId}"/></i> 
- 				<c:out value="${book.bookingDate}"/>
- 				<c:out value="${book.startTime}"/> 
- 				<c:out value="${book.finishTime}"/> 
- 				<br><br>
- 			</c:forEach>--> 
+
+ 		<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a booking</button>
+ 		<hr/>
+ 		
     	<div id='calendar'></div>
     
     </main>

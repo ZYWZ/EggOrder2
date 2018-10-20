@@ -19,8 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 
@@ -99,6 +101,38 @@ public class CalendarController {
         
         String json = new Gson().toJson(result);
         model.addAttribute("result", json);
+        
+        return "calendar";
+    }
+    
+    @RequestMapping(value = "/calendar{Id}", method = RequestMethod.GET)
+    public String hibernateQueryWithClassroomID(Locale locale, Model model, @PathVariable int Id) {
+        
+        // HQL (Hibernate Query Language)
+        Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
+        query.setInteger("classroomid", Id);
+        List<Booking> result = (List<Booking>)query.list();
+        
+        String json = new Gson().toJson(result);
+        model.addAttribute("result", json);
+        model.addAttribute("classroomID", Id);
+        
+        return "calendar";
+    }
+    
+    @RequestMapping(value = "/calendarAdd", method = RequestMethod.POST)
+    public String AddEvent(Locale locale, Model model, @RequestParam("studentID") int studentID,@RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime) {
+        String st = startTime.toString().replaceAll("T", " ")+":00";
+        String ft = finishTime.toString().replaceAll("T", " ")+":00";
+        
+        Booking temp = new Booking();
+        temp.setStudentId(studentID);
+        temp.setClassroomId(123456);
+        temp.setBookingDate("2018-10-12");
+        temp.setStartTime(st);
+        temp.setFinishTime(ft);
+        
+        bookingService.registerBooking(temp);
         
         return "calendar";
     }

@@ -38,7 +38,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -51,21 +51,4 @@ public class HomeController {
 		
 		return "home";
 	}
-	
-/*	@Autowired
-    private BookingService bookingService;
-    @RequestMapping(value = "/hibernateDaoServiceAdd", method = RequestMethod.GET)
-    public String hibernateDaoServiceAdd(Locale locale, Model model) {
-    	
-        Booking b = new Booking();
-        b.setStudentId(1111);
-        b.setClassroomId(123456);
-        b.setBookingDate("2018-10-11");
-        b.setStartTime("2018-10-11 10:00:00");
-        b.setFinishTime("2018-10-11 16:00:00");
-
-        bookingService.registerBooking(b);
-        
-        return "home";
-    }*/
 }

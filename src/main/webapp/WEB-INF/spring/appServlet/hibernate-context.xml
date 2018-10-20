@@ -24,6 +24,9 @@
 		<property name="location" value="classpath:/database.properties" />
 	</bean>
 
+       <context:component-scan base-package="au.usyd.elec5619.dao"></context:component-scan>
+       <context:component-scan base-package="au.usyd.elec5619.service"></context:component-scan>
+
 	<!-- config data source, here we use DBCP data source -->
 	<bean name="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -62,5 +65,48 @@
 	</bean>
 
 	<tx:annotation-driven proxy-target-class="true" />
+	
+       <!-- 配置jdbc模板 -->
+        <bean id="jdbcTemplate"
+       class="org.springframework.jdbc.core.JdbcTemplate"
+       p:dataSource-ref="dataSource"></bean>
+      
+       <!-- 配置数据源事务管理 -->
+       <bean id="dataSourceTanslationManager"
+       class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+       p:dataSource-ref="dataSource"></bean>
+      
+     <mvc:interceptors>
+      <!--  <bean class="cn.lzc.interceptor.CustomInterceptor"></bean>--><!--拦截所有请求-->
+<!--         <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/" /><&lt;!&ndash;配置了mapping 这个 将不再起作用&ndash;&gt;
+            <bean class="cn.lzc.interceptor.CustomInterceptor"></bean>
+        </mvc:interceptor> -->
+        
+        <!--<mvc:interceptor>-->
+           <!--<mvc:mapping path="/hello" />&lt;!&ndash;配置拦截hello结尾的&ndash;&gt;-->
+            <!--<bean class="cn.lzc.interceptor.CustomInterceptor"/>-->
+        <!--</mvc:interceptor>-->
+        
+        <!--登录拦截器-->
+        <mvc:interceptor>
+            <mvc:mapping path="/home"/>
+            <bean class="au.usyd.elec5619.service.LoginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+      
+       <!-- 通过AOP配置提供事务增强，让service包下所有Bean的所有方法拥有事务 -->
+<!--        <aop:config proxy-target-class="true">
+           <aop:pointcut id="serviceMethod"
+              expression=" execution(* com.baobaotao.service..*(..))"/>
+           <aop:advisor pointcut-ref="serviceMethod" advice-ref="txAdvice" />
+       </aop:config>
+       <tx:advice id="txAdvice" transaction-manager="dataSourceTanslationManager">
+           <tx:attributes>
+              <tx:method name="*"/>
+           </tx:attributes>
+       </tx:advice> -->
+	
 
 </beans>
