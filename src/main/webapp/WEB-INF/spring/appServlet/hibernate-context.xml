@@ -92,6 +92,8 @@
         <!--登录拦截器-->
         <mvc:interceptor>
             <mvc:mapping path="/home"/>
+	    <mvc:mapping path="/calendar"/>
+	    <mvc:mapping path="/analyze"/>
             <bean class="au.usyd.elec5619.service.LoginInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
