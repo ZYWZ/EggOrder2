@@ -32,8 +32,13 @@ td, th {
     padding: 8px;
 }
 
-tr:nth-child(even) {
+tr:nth-child(odd) {
     background-color: #dddddd;
+}
+
+p {
+	font-family: arial, sans-serif;
+	font-size: 15px;
 }
 </style>
 
@@ -41,10 +46,10 @@ tr:nth-child(even) {
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search Classroom by Name" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" onclick="SearchOnClick()">Search</a>
+          <a class="nav-link" onclick="searchOnClick()" href="#">Search</a>
         </li>
       </ul>
       <ul class="navbar-nav px-3">
@@ -104,83 +109,163 @@ tr:nth-child(even) {
             <h1 class="h2">Map</h1>
           </div>
           
-    <div id="googleMap" style="width:800px;height:400px;"></div>
+    <div id="googleMap" style="width:100%;height:600px;"></div>
     
     <div id="classrooms"></div>
+    
 
 <script>
-var classrooms = ${classrooms};
 
-buildClassroomsTable(classrooms);
+	var classrooms = ${classrooms};
 
-function SearchOnClick() {
-	var classroomName = document.getElementsByTagName("input")[0].value;
-	console.log(classroomName);
-	classrooms.forEach(function(classroom) {
-		if (classroom["classroomName"] == classroomName) {
-			updateMarkerOnMap(classroom);
-			buildClassroomsTable([classroom]);
+	var map;
+
+	var markers = [];
+
+	var myLocation;
+
+	buildClassroomsTable(classrooms);
+
+	function searchOnClick() {
+		var classroomName = document.getElementsByTagName("input")[0].value;
+		if (classroomName != "") {
+			classrooms.forEach(function(classroom) {
+				if (classroom["classroomName"] == classroomName) {
+					updateMarkerOnMap(classroom);
+					buildClassroomsTable([ classroom ]);
+				}
+			});
+		} else {
+			initMap();
+			buildClassroomsTable(classrooms);
 		}
-	});
-	
-}
 
-function buildClassroomsTable(classrooms) {
-	var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th></tr>";
+	}
 
-	classrooms.forEach(function(classroom) {
-		text += "<tr>";
-		text += "<td>";
-		text += classroom["classroomName"];
-		text += "</td>";
-		text += "<td>";
-		text += classroom["classroomSize"];
-		text += "</td>";
-		text += "<td>";
-		text += classroom["address"];
-		text += "</td>";
-		text += "</tr>";
-	});
-	text += "</table>";
+	function buildClassroomsTable(classrooms) {
+		var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th></tr>";
 
-	document.getElementById("classrooms").innerHTML = text;
-}
+		classrooms.forEach(function(classroom) {
+			text += "<tr>";
+			text += "<td>";
+			text += classroom["classroomName"];
+			text += "</td>";
+			text += "<td>";
+			text += classroom["classroomSize"];
+			text += "</td>";
+			text += "<td>";
+			text += classroom["address"];
+			text += "</td>";
+			text += "</tr>";
+		});
+		text += "</table>";
 
-function myMap() {
-  var mapProp= {
-      center:new google.maps.LatLng(-33.8862248,151.1878795),
-      zoom:16,
-  };
-  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
-  classrooms.forEach(function(classroom) {
-	  var marker = new google.maps.Marker({position:new google.maps.LatLng(parseLat(classroom),parseLNg(classroom))});
-	  marker.setMap(map);
-  });
-}
+		document.getElementById("classrooms").innerHTML = text;
+	}
 
-function parseLat(classroom) {
-	return parseFloat(classroom["location"].split(',')[0]);
-}
-function parseLNg(classroom) {
-	return parseFloat(classroom["location"].split(',')[1]);
-}
+	function initMap() {
+		var mapProp = {
+			center : new google.maps.LatLng(47.620539, -122.3383257),
+			zoom : 15,
+		};
+		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-function updateMarkerOnMap(classroom) {
-	var mapProp= {
-		center:new google.maps.LatLng(-33.8862248,151.1878795),
-		zoom:16,
-	};
-	var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
-	var marker = new google.maps.Marker({position:new google.maps.LatLng(parseLat(classroom),parseLNg(classroom)), animation:google.maps.Animation.BOUNCE});
-	marker.setMap(map);
-}
+		classrooms.forEach(function(classroom) {
+			var marker = makeMarkerForClassroom(classroom, map);
+			marker.setAnimation(google.maps.Animation.DROP);
+			markers.push(marker);
+		});
 
+		putUserLocationInfoWindow(map);
+	}
 
+	function parseLat(classroom) {
+		return parseFloat(classroom["location"].split(',')[0]);
+	}
+	function parseLNg(classroom) {
+		return parseFloat(classroom["location"].split(',')[1]);
+	}
+
+	function updateMarkerOnMap(classroom) {
+		clearMarkers();
+		var marker = makeMarkerForClassroom(classroom);
+		marker.setAnimation(google.maps.Animation.BOUNCE);
+		putUserLocationInfoWindow(map);
+	}
+
+	function makeMarkerForClassroom(classroom) {
+		var infowindow = new google.maps.InfoWindow({
+			content : "<h4>" + classroom["classroomName"] + "</h4>"
+					+ "<p>Classroom size: " + classroom["classroomSize"]
+					+ "</p><p>Address: " + classroom["address"] + "</p>"
+					+ "<a value=\"" + classroom["location"]
+					+ "\" onclick=\"getDirectionsOnClink(" + "\'"
+					+ classroom["location"] + "\'"
+					+ "); return false;\" href=\"#\">Get Directions!</a>"
+		});
+		var marker = new google.maps.Marker({
+			position : new google.maps.LatLng(parseLat(classroom),
+					parseLNg(classroom)),
+			map : map,
+			title : classroom["classroomName"]
+		});
+		marker.addListener('click', function() {
+			infowindow.open(map, marker);
+		});
+		return marker;
+	}
+
+	function putUserLocationInfoWindow(map) {
+		infoWindow = new google.maps.InfoWindow;
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function(position) {
+				myLocation = {
+					lat : position.coords.latitude,
+					lng : position.coords.longitude
+				};
+				infoWindow.setPosition(myLocation);
+				infoWindow.setContent('You are here!');
+				infoWindow.open(map);
+			});
+		}
+
+	}
+
+	function getDirectionsOnClink(location) {
+		var directionsService = new google.maps.DirectionsService;
+		var directionsDisplay = new google.maps.DirectionsRenderer;
+		directionsDisplay.setMap(map);
+		directionsService.route({
+			origin : myLocation,
+			destination : {
+				lat : parseFloat(location.split(',')[0]),
+				lng : parseFloat(location.split(',')[1])
+			},
+			travelMode : 'WALKING'
+		}, function(response, status) {
+			if (status === 'OK') {
+				directionsDisplay.setDirections(response);
+			} else {
+				window.alert('Directions request failed due to ' + status);
+			}
+		});
+
+	}
+
+	function setMapOnAll(map) {
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(map);
+		}
+	}
+
+	function clearMarkers() {
+		setMapOnAll(null);
+	}
 </script>
 
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5pmkDGxqdja_kT9ALjpxvrKvhOZQzu5I&callback=initMap"></script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5pmkDGxqdja_kT9ALjpxvrKvhOZQzu5I&callback=myMap"></script>
     
     </main>
 	</div>
