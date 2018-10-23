@@ -1,7 +1,11 @@
+<% String path = request.getContextPath(); 
+   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
+%> 
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
+<base href="<%=basePath%>">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calendar Page</title>
@@ -54,7 +58,7 @@ p {
       </ul>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign in</a>
+          <a class="nav-link" href="logout">Log out</a>
         </li>
       </ul>
     </nav>

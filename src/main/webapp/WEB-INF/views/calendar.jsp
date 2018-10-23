@@ -154,7 +154,7 @@ $(document).ready(function() {
       	<button type="button" class="btn btn-info btn-sm btn-dark" id="enter" onClick="SearchOnClick();return false;">Search</button>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="signin">Sign in</a>
+          <a class="nav-link" href="logout">Log out</a>
         </li>
       </ul>
     </nav>
