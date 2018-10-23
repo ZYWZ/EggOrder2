@@ -7,9 +7,9 @@ import org.springframework.stereotype.Repository;
 import au.usyd.elec5619.domain.User;
  
 
-@Repository//spring×¢½â¶¨ÒåÒ»¸ödao
+@Repository//spring×¢ï¿½â¶¨ï¿½ï¿½Ò»ï¿½ï¿½dao
 public class UserDao {
-	@Autowired//×Ô¶¯×¢ÈëJdbcTemplate µÄbean
+	@Autowired//ï¿½Ô¶ï¿½×¢ï¿½ï¿½JdbcTemplate ï¿½ï¿½bean
     private JdbcTemplate jdbcTemplate;
 
     public int registerUser(String student_id, String password, String fullname, String email, String birthdate){
@@ -31,6 +31,12 @@ public class UserDao {
        int result = jdbcTemplate.queryForInt(sql, new Object[]{student_id,password});
        return result;
     }
+    
+    public int getAdminMatchCount(String admin_id,String password){
+        String sql = "SELECT count(admin_id) from AdminMember where admin_id = ? and password=?";
+        int result = jdbcTemplate.queryForInt(sql, new Object[]{admin_id,password});
+        return result;
+     }
 }
 
 

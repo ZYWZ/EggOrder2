@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import au.usyd.elec5619.dao.UserDao;
 import au.usyd.elec5619.domain.User;
  
-@Service//±ê×¢Îª·þÎñ²ãµÄbean
+@Service//ï¿½ï¿½×¢Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½bean
 public class UserService {
     @Autowired
     private UserDao userDao;
@@ -25,5 +25,9 @@ public class UserService {
     public boolean getMatchCount(String student_id,String password){
        return userDao.getMatchCount(student_id,password)>0;
     }
+    
+    public boolean getAdminMatchCount(String admin_id,String password){
+        return userDao.getAdminMatchCount(admin_id,password)>0;
+     }
    
 }
