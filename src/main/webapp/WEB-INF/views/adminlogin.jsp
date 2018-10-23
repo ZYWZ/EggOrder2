@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   
-  <title>EggOrder SigIn-Page</title>
+  <title>EggOrder Admin-SigIn-Page</title>
 
   <link href="http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,600,700,300&subset=latin" rel="stylesheet" type="text/css">
   <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
@@ -86,19 +86,19 @@
   <!-- / Custom styling -->
 </head>
 <body>
-  <div class="page-signin-header p-a-2 text-sm-center bg-white">
+<!--   <div class="page-signin-header p-a-2 text-sm-center bg-white">
     <a class="px-demo-brand px-demo-brand-lg text-default" href="index.html"><span class="px-demo-logo bg-primary m-t-0"><span class="px-demo-logo-1"></span><span class="px-demo-logo-2"></span><span class="px-demo-logo-3"></span><span class="px-demo-logo-4"></span><span class="px-demo-logo-5"></span><span class="px-demo-logo-6"></span><span class="px-demo-logo-7"></span><span class="px-demo-logo-8"></span><span class="px-demo-logo-9"></span></span>EggOrder</a>
     <a href="signup" class="btn btn-primary">Sign Up</a>
-  </div>
+  </div> -->
 
   <!-- Sign In form -->
 
   <div class="page-signin-container" id="page-signin-form">
-    <h2 class="m-t-0 m-b-4 text-xs-center font-weight-semibold font-size-20">Sign In to your Account</h2>
+    <h2 class="m-t-0 m-b-4 text-xs-center font-weight-semibold font-size-20">Admin</h2>
 
-    <form action="signinProcess" class="panel p-a-4" method="POST">
+    <form action="adminloginProcess" class="panel p-a-4" method="POST">
       <fieldset class=" form-group form-group-lg">
-        <input type="text" class="form-control" name="student_id" placeholder="StudentId">
+        <input type="text" class="form-control" name="admin" placeholder="Admin">
       </fieldset>
 
       <fieldset class=" form-group form-group-lg">
@@ -106,12 +106,12 @@
       </fieldset>
 
       <div class="clearfix">
-        <a href="adminlogin" class="custom-control custom-checkbox pull-xs-left">
+        <a href="signin" class="custom-control custom-checkbox pull-xs-left">
           <!-- <input type="checkbox" class="custom-control-input"> -->
           <!-- <span class="custom-control-indicator"></span> -->
-          Admin login
+          Student login
         </a>
-        <a href="#" class="font-size-12 text-muted pull-xs-right" id="page-signin-forgot-link">Forgot your password?</a>
+        <!-- <a href="#" class="font-size-12 text-muted pull-xs-right" id="page-signin-forgot-link">Forgot your password?</a> -->
       </div>
 
       <button type="submit" class="btn btn-block btn-lg btn-primary m-t-3">Sign In</button>

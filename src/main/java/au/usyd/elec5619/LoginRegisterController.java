@@ -19,7 +19,7 @@ import au.usyd.elec5619.domain.User;
 //import au.usyd.elec5619.domain.Login;
 import au.usyd.elec5619.service.UserService;
  
-@Controller//±ê×¢³ÉÎªspring mvc µÄControllerÀà
+@Controller//æ ‡æ³¨æˆä¸ºspring mvc çš„Controllerç±»
 public class LoginRegisterController {
     @Autowired
     private UserService userService;
@@ -33,6 +33,16 @@ public class LoginRegisterController {
     public String register(){
        return "signup";
     }
+
+//    @RequestMapping(value={"/registerCheck"})
+//    public @ResponseBody String registerCheck(HttpServletRequest request){
+//       String name =request.getParameter("name");
+//       boolean b = userService.registerCheck(name);
+//       if(!b){
+//         return"user error";
+//       }
+//     return"user ok";
+//    }
 
     
     @RequestMapping(value={"/signinProcess"})
@@ -66,7 +76,7 @@ public class LoginRegisterController {
        boolean b = userService.registerUser(student_id, password, fullname, email, birthdate);
        if(!b){
     	   model.addAttribute("msg","StudentId has been registered");
-    	   return "login";
+    	   return "signup";
        }
        request.getSession().setAttribute("user",user);
        return "redirect:signin";
@@ -74,9 +84,51 @@ public class LoginRegisterController {
     
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session){
-        //Çå³ısession
+        //æ¸…é™¤session
         session.invalidate();
-        //ÖØ¶¨Ïòµ½µÇÂ¼Ò³ÃæµÄÌø×ª·½·¨
-        return "redirect:login";
+        //é‡å®šå‘åˆ°ç™»å½•é¡µé¢çš„è·³è½¬æ–¹æ³•
+        return "redirect:signin";
     }
 }
+
+
+
+
+//@Controller
+//public class LoginRegisterController {
+//  @Autowired
+//  public UserService userService;
+//  @RequestMapping(value = "/signup", method = RequestMethod.GET)
+//  public ModelAndView showRegister(HttpServletRequest request, HttpServletResponse response) {
+//    ModelAndView mav = new ModelAndView("signup");
+////    mav.addObject("user", new User());
+//    return mav;
+//  }
+//  @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
+//  public ModelAndView addUser(HttpServletRequest request, HttpServletResponse response,
+//  @ModelAttribute("user") User user) {
+//  userService.register(user);
+//  return new ModelAndView("home");
+//  }
+//  
+//  @RequestMapping(value = "/signin", method = RequestMethod.GET)
+//  public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
+//    ModelAndView mav = new ModelAndView("signin");
+//    mav.addObject("login", new User());
+//    return mav;
+//  }
+//  @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
+//  public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse response,
+//  @ModelAttribute("login")  Login login) {
+//    ModelAndView mav = null;
+//    User user = userService.validateUser(login);
+//    if (null != user) {
+//    mav = new ModelAndView("home");
+////    mav.addObject("firstname", user.getFirstname());
+//    } else {
+//    mav = new ModelAndView("login");
+//    mav.addObject("message", "Username or Password is wrong!!");
+//    }
+//    return mav;
+//  }
+//}

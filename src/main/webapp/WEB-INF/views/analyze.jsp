@@ -6,20 +6,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calendar Page</title>
 
-<link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
+<!-- Google Chart -->
+<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-  <script src="resources/bootstrap-4.1.3-dist/js/bootstrap.min.js"></script>
-  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="resources/bootstrap-4.1.3-dist/js/bootstrap.min.js"></script>
 <script src='resources/fullcalendar-3.9.0/lib/jquery.min.js'></script>
 <script src='resources/fullcalendar-3.9.0/lib/moment.min.js'></script>
 <script src='resources/fullcalendar-3.9.0/fullcalendar.js'></script>
+<script src='resources/js/analyze.js'></script>
+
 
 
 <link rel="stylesheet" href="resources/bootstrap-4.1.3-dist/css/bootstrap.min.css"/>
-
-  <link href="resources/dashboard.css" rel="stylesheet">
+<link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
+<link href="resources/dashboard.css" rel="stylesheet">
 
  <style>
 .ul_1 {
@@ -70,7 +74,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/elec5619">Egg Order System</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -97,7 +101,7 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="map">
+                <a class="nav-link" href="#">
                   <span data-feather="map"></span>
                   Map
                 </a>
@@ -130,16 +134,16 @@
           </div>
              <nav class="nav_1">
 			    <ul class="ul_1">
-			        <li class="li_1"><a class="navigator_1" id="bbt_button">Booking Peak-Time</a></li>
-			        <li class="li_1"><a class="navigator_1" id="rc_button">Rating Contribution</a></li>
-			        <li class="li_1"><a class="navigator_1" id="cc_button">Classroom Comparison</a></li>
+			        <li class="li_1"><button class="navigator_1" id="bbt_button">Booking Peak-Time</button></li>
+			        <li class="li_1"><button class="navigator_1" id="rc_button">Rating Contribution</button></li>
+			        <li class="li_1"><button class="navigator_1" id="cc_button">Classroom Comparison</button></li>
 			    </ul>
 			</nav>
-<div class="page1 page" id="bbt"><h1 class="h2">bbt</h1></div>
+<div class="page1 page" id="bbt_chart"><h1 class="h2"></h1></div>
 
-<div class="page2 page" id="rc"><h1 class="h2">rc</h1></div>
+<div class="page2 page" id="rc_chart"><h1 class="h2"></h1></div>
 
-<div class="page3 page" id="cc"><h1 class="h2">cc</h1></div>
+<div class="page3 page" id="cc_chart"><h1 class="h2"></h1></div>
     
     </main>
 	</div>
@@ -153,18 +157,107 @@
 $(document).ready(function() {
     $("#bbt_button").on("click", function() {
         $(".page").css({"display": "none"});
-        $("#bbt").css({"display": "block"});
+        $("#bbt_chart").css({"display": "block"});
     });
     $("#rc_button").on("click", function() {
         $(".page").css({"display": "none"});
-        $("#rc").css({"display": "block"});
+        $("#rc_chart").css({"display": "block"});
     });
     $("#cc_button").on("click", function() {
         $(".page").css({"display": "none"});
-        $("#cc").css({"display": "block"});
+        $("#cc_chart").css({"display": "block"});
     })
 
 });
+</script>
+<script>
+google.charts.load('current', {'packages': ['bar']});
+google.charts.load('current', {'packages':['corechart']});
+
+$(document).ready(function () {
+    $("#bbt_button").click(function (event) {
+          event.preventDefault();
+          var result=${Result}; 
+          var data = [
+            [result[0][0],  result[0][1]],
+            [result[1][0],  Number(result[1][1])],
+            [result[2][0],  Number(result[2][1])],
+            [result[3][0],  Number(result[3][1])],
+            [result[4][0],  Number(result[4][1])]
+          ]  
+         draw_firChart(data)
+    })
+});
+
+$(document).ready(function () {
+    $("#rc_button").click(function (event) {
+          event.preventDefault();
+          var result=${Result}; 
+          var data = [
+            [result[0][0],  result[0][1]],
+            [result[1][0],  Number(result[1][1])],
+            [result[2][0],  Number(result[2][1])],
+            [result[3][0],  Number(result[3][1])],
+            [result[4][0],  Number(result[4][1])]
+          ]  
+         draw_secChart(data)
+    })
+});
+
+$(document).ready(function () {
+    $("#cc_button").click(function (event) {
+          event.preventDefault();
+          var result=${Result}; 
+          var data = [
+            [result[0][0],  result[0][1]],
+            [result[1][0],  Number(result[1][1])],
+            [result[2][0],  Number(result[2][1])],
+            [result[3][0],  Number(result[3][1])],
+            [result[4][0],  Number(result[4][1])]
+          ]  
+         draw_thirdChart(data)
+    })
+});
+ 
+ function draw_firChart(data) {
+    var real_data = google.visualization.arrayToDataTable(data);
+    var options = {
+        title: 'Booking Peak-Time',
+        curveType: 'function',
+        legend: { position: 'bottom'},
+        width:1100,
+        height:600
+    };
+    var chart = new google.visualization.LineChart(document.getElementById('bbt_chart'));
+
+    chart.draw(real_data, options);
+}
+ 
+ function draw_secChart(data) {
+	    var real_data = google.visualization.arrayToDataTable(data);
+	    var options = {
+	        title: 'Rating Contribution',
+	        legend: { position: 'bottom'},
+	        width:1100,
+	        height:600
+	    };
+	    var chart = new google.visualization.BarChart(document.getElementById('rc_chart'));
+
+	    chart.draw(real_data, options);
+	}
+ 
+ function draw_thirdChart(data) {
+	    var real_data = google.visualization.arrayToDataTable(data);
+	    var options = {
+	        title: 'Classroom Comparison',
+	        legend: { position: 'bottom'},
+	        width:1100,
+	        height:600
+	    };
+	    var chart = new google.visualization.BarChart(document.getElementById('cc_chart'));
+
+	    chart.draw(real_data, options);
+	}
 </script>
 </body>
 </html>
