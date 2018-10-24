@@ -58,7 +58,7 @@ public class LoginRegisterController {
        loginUser.setStudentId(student_id);
        session.setAttribute("USER_SESSION",loginUser);
 //       request.getSession().setAttribute("user",loginUser);
-       return "redirect:home";
+       return "redirect:dashboard";
     }
     
     

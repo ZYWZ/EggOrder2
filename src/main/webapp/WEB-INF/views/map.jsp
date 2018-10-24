@@ -69,7 +69,7 @@ p {
           <div class="sidebar-sticky">
             <ul class="nav flex-column">         
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="dashboard">
                   <span data-feather="home"></span>
                   Dashboard 
                 </a>
@@ -87,7 +87,7 @@ p {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="profile">
                   <span data-feather="users"></span>
                   Profile
                 </a>
