@@ -114,6 +114,7 @@ public class CalendarController {
         List<Booking> result = (List<Booking>)query.list();
         
         String json = new Gson().toJson(result);
+        logger.info("Welcome home! The client locale is {}.", json);
         model.addAttribute("result", json);
         model.addAttribute("classroomID", Id);
         

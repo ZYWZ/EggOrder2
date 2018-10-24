@@ -9,7 +9,7 @@ import au.usyd.elec5619.domain.User;
 
 @Repository//springע�ⶨ��һ��dao
 public class UserDao {
-	@Autowired//�Զ�ע��JdbcTemplate ��bean
+	@Autowired
     private JdbcTemplate jdbcTemplate;
 
     public int registerUser(String student_id, String password, String fullname, String email, String birthdate){

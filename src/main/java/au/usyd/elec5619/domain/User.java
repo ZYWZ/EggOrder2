@@ -1,8 +1,14 @@
 package au.usyd.elec5619.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
 
+@Entity
+@Table(name = "Student")
 public class User {
+	@Id
 	@Column(name = "student_id")
 	private String student_id;
 	@Column(name = "fullname")
