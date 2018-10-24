@@ -1,12 +1,19 @@
 package au.usyd.elec5619.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Id;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
+
+@Entity
+@Table(name = "Student")
 public class User {
+	@Id
 	@Column(name = "student_id")
 	private String student_id;
-	@Column(name = "fullname")
-	private String fullname;
+	@Column(name = "full_name")
+	private String full_name;
 	@Column(name = "password")
 	private String password;
 	@Column(name = "email")
@@ -21,10 +28,10 @@ public class User {
 		this.student_id = name;
 	}
 	public String getFullName() {
-		return fullname;
+		return full_name;
 	}
 	public void setFullName(String fullname) {
-		this.fullname = fullname;
+		this.full_name = fullname;
 	}
 	public String getPassword() {
 		return password;

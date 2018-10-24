@@ -5,10 +5,10 @@ import javax.annotation.Resource;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import au.usyd.elec5619.domain.Booking;
+import au.usyd.elec5619.domain.Classroom;
 
-@Repository(value = "bookingDao")
-public class BookingDao {
+@Repository(value = "classroomDao")
+public class ClassroomDao {
 
     @Resource
     private SessionFactory sessionFactory;
@@ -21,11 +21,7 @@ public class BookingDao {
         this.sessionFactory = sessionFactory;
     }
 
-    public void saveBooking(Booking booking) {
-        sessionFactory.getCurrentSession().save(booking);
+    public void saveClassroom(Classroom classroom) {
+        sessionFactory.getCurrentSession().save(classroom);
     }
-    
-    public void deleteBooking(Booking booking) {
-    	sessionFactory.getCurrentSession().delete(booking);
-	}
 }
