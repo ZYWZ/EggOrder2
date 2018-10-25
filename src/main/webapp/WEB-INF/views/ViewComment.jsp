@@ -21,7 +21,7 @@
   <link href="resources/dashboard.css" rel="stylesheet">
   <link href="resources/comment/comment.css" rel="stylesheet">
   
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
   
   function rate(obj,oEvent){
 	
@@ -56,7 +56,7 @@
 	  }
 	}
 	}
-  </script>
+  </script> -->
 </head>
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
@@ -121,7 +121,7 @@
         
  
     
-    <p onmouseover="rate(this,event)">
+   <!--  <p onmouseover="rate(this,event)">
  <img src="resources/comment/s0.png" title="Worst" width="80px" height="80px"/>
  <img src="resources/comment/s0.png" title="bad" width="80px" height="80px"/>
  <img src="resources/comment/s0.png" title="so so" width="80px" height="80px"/>
@@ -130,9 +130,9 @@
  </p>
 	 <form  method="post">
 		 <input type="text" id="text_id"  name="score" readonly="readonly"/>
-<!-- 		 <p>Student ID: </p>
-		 <input type="text" id="text111"  name="student_id" /> -->
-		<!--  <br/>
+		 <p>Student ID: </p>
+		 <input type="text" id="text111"  name="student_id" />
+		 <br/>
 		 <br/>
 		 <div>
 		 <p>Classroom ID: </p>
@@ -142,14 +142,14 @@
 		 <option value="2" selected>classroom2</option>
 		 <option value="3" selected>classroom3</option>
 		 </select> 
-		 </div> -->
+		 </div>
 	    <br/>
 	    <br/>
         <textarea id="textarea" cols="100" rows="10"  name="comment" placeholder="Talking somthing"></textarea>
 	     <br/>
 	     <button type="reset" id="but1">reset</button>
 	     <button type="submit" id="but2">submit</button>
-	</form>
+	</form> -->
 	
 	<div lang="en-US" class="gitment-container gitment-comments-container">
         <ul class="gitment-comments-list" id ="cmt_main">
@@ -208,27 +208,14 @@ $(document).ready(function () {
  	for(i=0;i<comment.length;i++)
 		{
 		str += "<li class='gitment-comment'><a class='gitment-comment-avatar'></a><div class='gitment-comment-main'><div class='gitment-comment-header'><a class='gitment-comment-name'>"
-                          +comment[i].student_id+"    "+
+                          +comment[i].student_id+"  "+
                           "</a><span>"
                           +comment[i].post_time+
-                          "</span><span style='float:right' class = 'span1'></sapn></div><div class='gitment-comment-body gitment-markdown'><p>"
+                          "</span></div><div class='gitment-comment-body gitment-markdown'><p>"
                           +comment[i].comment+
                           "</p></div></div></li>"
 		} 
 	$('#cmt_main').html(str)
-	for(i=0;i<comment.length;i++){
-		var num = comment[i].score;
-		for(i=0;i<num;i++){
-		$('span1').innerHtml="<img src='resources/comment/s1.png' width='10px' height='10px'/>";
-		/* $("#div123").prop("span1");
-		$("#div123").css('background','url(resources/comment/s1.png)');
-		 $("#div123").css("width", 10px);
-		 $("#div123").css("height", 10px); */
-		/* var oSpan = document.getElementByClassName('span1')
-		var oImg = document.createElement('img'); 
-			oImg.src = 'resources/comment/s1.png'; */
-		}
-	}
     });
 
 </script>

@@ -287,7 +287,7 @@ tr:nth-child(even) {
 	            window.location.replace("calendar/"+id);
 	        }
 		 function view(id){
-	            window.location.replace("comment/"+id);
+	            window.location.replace("ViewComment/"+id);
 	        } 
 		
 		

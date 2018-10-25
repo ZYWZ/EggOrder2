@@ -98,7 +98,31 @@ public class CommentController {
 		return "comment";
 		
 	}
-	
+	@RequestMapping(value = "/ViewComment/{Id}", method = RequestMethod.GET)
+	public String ViewComment(Locale locale, HttpServletRequest request, Model model, HttpSession session,
+			@PathVariable int Id,User user){
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String formattedDate = dateFormat.format(date);
+		String login_info = new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
+		login_info = login_info.replace("{","").replace("}","").replace("\"","").replace("student_id:","");
+		String student_id =login_info;
+//        int classroom_id = Id;
+//        String comment = request.getParameter("comment");
+//        String score = request.getParameter("score");
+//        String post_time = formattedDate;
+		//commentService.PostComment(student_id,classroom_id,comment,score,post_time);
+        
+        Query query = sessionFactory.getCurrentSession().createQuery("from Comment b where b.classroom_id = :classroomid");
+        query.setInteger("classroomid", Id);
+        List<Comment> result = (List<Comment>)query.list();
+        String comment = new Gson().toJson(result);
+        model.addAttribute("comment", comment);
+        model.addAttribute("classroomID", Id);
+        
+		return "ViewComment";
+		
+	}
     
 }
 

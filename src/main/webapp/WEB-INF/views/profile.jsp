@@ -186,9 +186,10 @@ p {
 				newLine.insertCell(3).appendChild(s);
 				var btn = document.createElement("input");
 				btn.type = "button";
+				btn.id = oldBooking[i].classroomId;
 				btn.value = "View Comment";
 				btn.onclick=function (){ 
-					 view(oldBookingId);
+					 view(this.id);
 		              };
 		        newLine.insertCell(4).appendChild(btn);
 		  } 
