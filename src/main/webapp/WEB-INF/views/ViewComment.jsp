@@ -207,13 +207,15 @@ $(document).ready(function () {
 	var str ="";
  	for(i=0;i<comment.length;i++)
 		{
-		str += "<li class='gitment-comment'><a class='gitment-comment-avatar'></a><div class='gitment-comment-main'><div class='gitment-comment-header'><a class='gitment-comment-name'>"
-                          +comment[i].student_id+"  "+
-                          "</a><span>"
-                          +comment[i].post_time+
-                          "</span></div><div class='gitment-comment-body gitment-markdown'><p>"
-                          +comment[i].comment+
-                          "</p></div></div></li>"
+ 		str += "<li class='gitment-comment'><a class='gitment-comment-avatar'></a><div class='gitment-comment-main'><div class='gitment-comment-header'><a class='gitment-comment-name'>"
+            +comment[i].student_id+"&nbsp&nbsp&nbsp&nbsp&nbsp"+
+            "</a><span> Post time: "
+            +comment[i].post_time+
+            "</span><span style='float:right'>Rating score: "
+            +comment[i].score+
+            "</sapn></div><div class='gitment-comment-body gitment-markdown'><p>"
+            +comment[i].comment+
+            "</p></div></div></li>"
 		} 
 	$('#cmt_main').html(str)
     });

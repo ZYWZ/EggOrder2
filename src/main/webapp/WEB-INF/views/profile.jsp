@@ -193,7 +193,9 @@ p {
 				newLine.insertCell(3).appendChild(s);
 				var btn = document.createElement("input");
 				btn.type = "button";
-				btn.value = "Comment";
+				btn.id = oldBooking[i].classroomId;
+				btn.value = "Add Comment";
+
 				btn.onclick=function (){ 
 					 view(this.id);
 		              };
