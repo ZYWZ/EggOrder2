@@ -50,10 +50,10 @@ p {
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard">Egg Order System</a>
-      <input class="form-control form-control-dark w-100" type="text" placeholder="Search Classroom by Name" aria-label="Search">
+      <input class="form-control form-control-dark w-100" type="text" placeholder="Search Classroom" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" onclick="searchOnClick()" href="#">Search</a>
+          <a class="nav-link" onclick="searchOnClick(); return false;" href="#">Search</a>
         </li>
       </ul>
       <ul class="navbar-nav px-3">
@@ -121,6 +121,8 @@ p {
 <script>
 
 	var classrooms = ${classrooms};
+	
+	console.log(classrooms);
 
 	var map;
 
@@ -131,14 +133,16 @@ p {
 	buildClassroomsTable(classrooms);
 
 	function searchOnClick() {
-		var classroomName = document.getElementsByTagName("input")[0].value;
-		if (classroomName != "") {
-			classrooms.forEach(function(classroom) {
-				if (classroom["classroomName"] == classroomName) {
-					updateMarkerOnMap(classroom);
-					buildClassroomsTable([ classroom ]);
-				}
+		var keyword = document.getElementsByTagName("input")[0].value;
+		if (keyword != "") {
+			matchedClassrooms = classrooms.filter(function(classroom) {
+				if (classroom["classroomName"].toLowerCase().includes(keyword) || classroom["address"].toLowerCase().includes(keyword))
+					return classroom;
 			});
+
+			updateMarkerOnMap(matchedClassrooms);
+			buildClassroomsTable(matchedClassrooms);
+
 		} else {
 			initMap();
 			buildClassroomsTable(classrooms);
@@ -147,7 +151,7 @@ p {
 	}
 
 	function buildClassroomsTable(classrooms) {
-		var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th></tr>";
+		var text = "<table><tr><th>Classroom Name</th><th>Classroom Size</th><th>Address</th><th>Actions</th></tr>";
 
 		classrooms.forEach(function(classroom) {
 			text += "<tr>";
@@ -159,6 +163,11 @@ p {
 			text += "</td>";
 			text += "<td>";
 			text += classroom["address"];
+			text += "</td>";
+			text += "<td>";
+			text += "<a value=\"" + classroom["location"] + "\" onclick=\"getDirectionsOnClink(\'"+ classroom["location"] + "\'); return false;\" href=\"#\">Get Directions</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			text += "<a href=\"ViewComment/"+classroom["classroomId"]+"\">View Comment</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			text += "<a href=\"calendar/"+classroom["classroomId"]+"\">Book it</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 			text += "</td>";
 			text += "</tr>";
 		});
@@ -190,10 +199,12 @@ p {
 		return parseFloat(classroom["location"].split(',')[1]);
 	}
 
-	function updateMarkerOnMap(classroom) {
+	function updateMarkerOnMap(classrooms) {
 		clearMarkers();
-		var marker = makeMarkerForClassroom(classroom);
-		marker.setAnimation(google.maps.Animation.BOUNCE);
+		classrooms.forEach(function(classroom) {
+			var marker = makeMarkerForClassroom(classroom);
+			marker.setAnimation(google.maps.Animation.BOUNCE);
+		});
 		putUserLocationInfoWindow(map);
 	}
 
@@ -205,7 +216,9 @@ p {
 					+ "<a value=\"" + classroom["location"]
 					+ "\" onclick=\"getDirectionsOnClink(" + "\'"
 					+ classroom["location"] + "\'"
-					+ "); return false;\" href=\"#\">Get Directions!</a>"
+					+ "); return false;\" href=\"#\">Get Directions</a><br>"
+					+ "<a href=\"ViewComment/"+classroom["classroomId"]+"\">View Comment</a><br>"
+					+ "<a href=\"calendar/"+classroom["classroomId"]+"\">Book it</a>"
 		});
 		var marker = new google.maps.Marker({
 			position : new google.maps.LatLng(parseLat(classroom),
