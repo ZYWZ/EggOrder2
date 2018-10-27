@@ -84,12 +84,12 @@ tr:nth-child(even) {
                   Profile
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#">
                   <span data-feather="layers"></span>
                   Comment
                 </a>
-              </li>         
+              </li>    -->      
             <li class="nav-item">
                 <a class="nav-link" href="analyze">
                   <span data-feather="bar-chart-2"></span>

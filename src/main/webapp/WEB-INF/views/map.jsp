@@ -8,7 +8,7 @@
 <base href="<%=basePath%>">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Page</title>
+<title>Map Page</title>
 
 <link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
 <link href="resources/dashboard.css" rel="stylesheet">
@@ -49,7 +49,7 @@ p {
 </head>
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard">Egg Order System</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search Classroom by Name" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -75,13 +75,13 @@ p {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="calendar">
+                <a class="nav-link" href="calendar">
                   <span data-feather="calendar"></span>
                   Calendar <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="map">
+                <a class="nav-link active" href="map">
                   <span data-feather="map"></span>
                   Map
                 </a>
@@ -92,12 +92,12 @@ p {
                   Profile
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="comment">
                   <span data-feather="layers"></span>
                   Comment
                 </a>
-              </li>         
+              </li>  -->        
             <li class="nav-item">
                 <a class="nav-link" href="analyze">
                   <span data-feather="bar-chart-2"></span>
@@ -169,7 +169,7 @@ p {
 
 	function initMap() {
 		var mapProp = {
-			center : new google.maps.LatLng(47.620539, -122.3383257),
+			center : new google.maps.LatLng(-33.88811,151.19426),
 			zoom : 15,
 		};
 		map = new google.maps.Map(document.getElementById("googleMap"), mapProp);

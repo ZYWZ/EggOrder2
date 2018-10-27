@@ -149,7 +149,7 @@ $(document).ready(function() {
 <!-- End of Add booking Modal -->
 
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard">Egg Order System</a>
       	<input  class="form-control form-control-dark mw-100" id="searchResult" name="searchForClassroom" type="text" placeholder="Search" aria-label="Search">
       	<button type="button" class="btn btn-info btn-sm btn-dark" id="enter" onClick="SearchOnClick();return false;">Search</button>
       <ul class="navbar-nav px-3">
@@ -188,12 +188,12 @@ $(document).ready(function() {
                   Profile
                 </a>
               </li>
-              <li class="nav-item">
+             <!--  <li class="nav-item">
                 <a class="nav-link" href="comment">
                   <span data-feather="layers"></span>
                   Comment
                 </a>
-              </li>         
+              </li>   -->       
             <li class="nav-item">
                 <a class="nav-link" href="analyze">
                   <span data-feather="bar-chart-2"></span>

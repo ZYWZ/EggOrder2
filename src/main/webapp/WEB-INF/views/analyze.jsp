@@ -8,7 +8,7 @@
 <base href="<%=basePath%>">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Page</title>
+<title>Analyze Page</title>
 
 <!-- Google Chart -->
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -78,7 +78,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/elec5619">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard">Egg Order System</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -116,12 +116,12 @@
                   Profile
                 </a>
               </li>
-              <li class="nav-item">
+             <!--  <li class="nav-item">
                 <a class="nav-link" href="comment">
                   <span data-feather="layers"></span>
                   Comment
                 </a>
-              </li>         
+              </li>    -->      
             <li class="nav-item">
                 <a class="nav-link active" href="analyze">
                   <span data-feather="bar-chart-2"></span>

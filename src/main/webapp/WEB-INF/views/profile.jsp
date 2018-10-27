@@ -50,36 +50,8 @@ p {
 
 </head>
 <body>
-
-
-<!-- Add booking Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4><span class="glyphicon glyphicon-lock"></span>Cancel this booking</h4>   
-        </div>
-        <div class="modal-body">
-          <form role="form" method="post" id="deleteForm">
-            <div class="form-group">
-              <label>Do you really want to cancel this booking?</label>
-            </div>
-            <hr/>
-            
-            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Yes</button>
-          </form>
-        </div>
-      </div>
-      
-    </div>
-  </div> 
-<!-- End of Add booking Modal -->
-
-
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard">Egg Order System</a>
       </ul>
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -117,12 +89,12 @@ p {
                   Profile <span class="sr-only">(current)</span>
                 </a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" href="#">
                   <span data-feather="layers"></span>
                   Comment
                 </a>
-              </li>         
+              </li>    -->      
             <li class="nav-item">
                 <a class="nav-link" href="analyze">
                   <span data-feather="bar-chart-2"></span>
