@@ -194,7 +194,7 @@ p {
 				var btn = document.createElement("input");
 				btn.type = "button";
 				btn.id = oldBooking[i].classroomId;
-				btn.value = "Add Comment";
+				btn.value = "Comment";
 
 				btn.onclick=function (){ 
 					 view(this.id);
