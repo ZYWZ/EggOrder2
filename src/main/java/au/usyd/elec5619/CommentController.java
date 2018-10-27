@@ -2,6 +2,7 @@ package au.usyd.elec5619;
 
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +86,8 @@ public class CommentController {
 	public String PublicComment(Locale locale, HttpServletRequest request, Model model, HttpSession session,
 			@PathVariable int Id,User user){
 		Date date = new Date();
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String formatDate = format.format(date);
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		String login_info = new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
@@ -93,9 +96,9 @@ public class CommentController {
         int classroom_id = Id;
         String comment = request.getParameter("comment");
         String score = request.getParameter("score");
-        String post_time = formattedDate;
+        String post_time = formatDate;
 		commentService.PostComment(student_id,classroom_id,comment,score,post_time);
-		return "comment";
+		return "redirect:/profile";
 		
 	}
 	@RequestMapping(value = "/ViewComment/{Id}", method = RequestMethod.GET)
