@@ -193,7 +193,6 @@ p {
 				newLine.insertCell(3).appendChild(s);
 				var btn = document.createElement("input");
 				btn.type = "button";
-				btn.id = oldBooking[i].id;
 				btn.value = "Comment";
 				btn.onclick=function (){ 
 					 view(this.id);
