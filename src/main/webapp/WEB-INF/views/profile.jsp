@@ -187,7 +187,7 @@ p {
 				var btn = document.createElement("input");
 				btn.type = "button";
 				btn.id = oldBooking[i].classroomId;
-				btn.value = "View Comment";
+				btn.value = "Add Comment";
 				btn.onclick=function (){ 
 					 view(this.id);
 		              };

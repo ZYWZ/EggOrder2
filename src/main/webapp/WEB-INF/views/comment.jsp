@@ -36,7 +36,6 @@
 	  imgArray[i].onclick=function(){
 	  if(obj.rateFlag) return;
 	  obj.rateFlag=true;
-	  alert(this._num+1); 
 	  var node = document.getElementById("text_id");
 	  node.value=this._num+1
 	  };
@@ -207,29 +206,31 @@ $(document).ready(function () {
 	var str ="";
  	for(i=0;i<comment.length;i++)
 		{
+ 		
 		str += "<li class='gitment-comment'><a class='gitment-comment-avatar'></a><div class='gitment-comment-main'><div class='gitment-comment-header'><a class='gitment-comment-name'>"
-                          +comment[i].student_id+"    "+
-                          "</a><span>"
+                          +comment[i].student_id+"&nbsp&nbsp&nbsp&nbsp&nbsp"+
+                          "</a><span>   Post time: "
                           +comment[i].post_time+
-                          "</span><span style='float:right' class = 'span1'></sapn></div><div class='gitment-comment-body gitment-markdown'><p>"
+                          "</span><span style='float:right'>Rating score: "
+                          +comment[i].score+
+                          "</sapn></div><div class='gitment-comment-body gitment-markdown'><p>"
                           +comment[i].comment+
                           "</p></div></div></li>"
 		} 
 	$('#cmt_main').html(str)
+	
+    });
+
+/* $(document).ready(function () {
+	var comment = ${comment};
+	var str ="";
 	for(i=0;i<comment.length;i++){
-		var num = comment[i].score;
+		var num = Number(comment[i].score);
 		for(i=0;i<num;i++){
-		$('span1').innerHtml="<img src='resources/comment/s1.png' width='10px' height='10px'/>";
-		/* $("#div123").prop("span1");
-		$("#div123").css('background','url(resources/comment/s1.png)');
-		 $("#div123").css("width", 10px);
-		 $("#div123").css("height", 10px); */
-		/* var oSpan = document.getElementByClassName('span1')
-		var oImg = document.createElement('img'); 
-			oImg.src = 'resources/comment/s1.png'; */
+		$('.span1').innerHtml="<img src='resources/comment/s1.png' width='10px' height='10px'/>";
 		}
 	}
-    });
+}); */
 
 </script>
 </html>
