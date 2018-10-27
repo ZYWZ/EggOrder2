@@ -63,36 +63,36 @@ public class DashboardController {
 	
 	
 	
-	@Autowired
-    private ClassroomService classroomService;
-    @RequestMapping(value = "/classroomhibernateDaoServiceAdd", method = RequestMethod.GET)
-    public String hibernateDaoServiceAdd(Locale locale, Model model) {
-    	
-        Classroom c1 = new Classroom();
-        c1.setClassroomId(2222);
-        c1.setClassroomName("Room123");
-        c1.setClassroomSize("16");
-        c1.setAddress("Fisher Library");
-        
-        Classroom c2 = new Classroom();
-        c2.setClassroomId(3333);
-        c2.setClassroomName("Room223");
-        c2.setClassroomSize("16");
-        c2.setAddress("Fisher Library2");
-        
-        Classroom c3 = new Classroom();
-        c3.setClassroomId(4444);
-        c3.setClassroomName("Room323");
-        c3.setClassroomSize("16");
-        c3.setAddress("Fisher Library3");
-        
-        classroomService.registerClassroom(c1);
-        classroomService.registerClassroom(c2);
-        classroomService.registerClassroom(c3);
-        
-        return "dashboard";
-    }
-    
+//	@Autowired
+//    private ClassroomService classroomService;
+//    @RequestMapping(value = "/classroomhibernateDaoServiceAdd", method = RequestMethod.GET)
+//    public String hibernateDaoServiceAdd(Locale locale, Model model) {
+//    	
+//        Classroom c1 = new Classroom();
+//        c1.setClassroomId(2222);
+//        c1.setClassroomName("Room123");
+//        c1.setClassroomSize("16");
+//        c1.setAddress("Fisher Library");
+//        
+//        Classroom c2 = new Classroom();
+//        c2.setClassroomId(3333);
+//        c2.setClassroomName("Room223");
+//        c2.setClassroomSize("16");
+//        c2.setAddress("Fisher Library2");
+//        
+//        Classroom c3 = new Classroom();
+//        c3.setClassroomId(4444);
+//        c3.setClassroomName("Room323");
+//        c3.setClassroomSize("16");
+//        c3.setAddress("Fisher Library3");
+//        
+//        classroomService.registerClassroom(c1);
+//        classroomService.registerClassroom(c2);
+//        classroomService.registerClassroom(c3);
+//        
+//        return "dashboard";
+//    }
+//    
     @Autowired
     private SessionFactory sessionFactory;
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)

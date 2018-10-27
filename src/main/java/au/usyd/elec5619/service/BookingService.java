@@ -23,4 +23,8 @@ public class BookingService {
         bookingDao.saveBooking(booking);
     }
     
+    public void deleteBookingByID(int id) {
+		bookingDao.deleteBookingById(id);
+	}
+    
 }

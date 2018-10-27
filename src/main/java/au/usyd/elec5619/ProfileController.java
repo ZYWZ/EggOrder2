@@ -43,6 +43,7 @@ import au.usyd.elec5619.dao.ClassroomDao;
 import au.usyd.elec5619.domain.Booking;
 import au.usyd.elec5619.domain.Classroom;
 import au.usyd.elec5619.domain.User;
+import au.usyd.elec5619.service.BookingService;
 import au.usyd.elec5619.service.ClassroomService;
 
 /**
@@ -114,17 +115,14 @@ public class ProfileController {
 	        
 	        return "profile";
 	    }
-	   
-	    public void deleteBooking(int id) {
-			Session currentSession = this.sessionFactory.getCurrentSession();
-			Booking booking = (Booking) currentSession.get(Booking.class, id);
-			currentSession.delete(booking);
-		}
 	    
+	    @Resource(name="bookingService")
+		private BookingService bookingService;
+	   
 	    @RequestMapping(value = "/profile/delete/{Id}", method = RequestMethod.POST)
 	    public String hibernateDelete(HttpServletRequest request, Model model, HttpSession session,Locale locale,@PathVariable int Id) {
 	    	
-	    	deleteBooking(Id);
+	    	bookingService.deleteBookingByID(Id);
 			return "redirect:/profile";
 	    }
 	      

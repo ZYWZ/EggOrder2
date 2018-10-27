@@ -3,6 +3,7 @@ package au.usyd.elec5619.dao;
 import javax.annotation.Resource;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.classic.Session;
 import org.springframework.stereotype.Repository;
 
 import au.usyd.elec5619.domain.Booking;
@@ -28,4 +29,11 @@ public class BookingDao {
     public void deleteBooking(Booking booking) {
     	sessionFactory.getCurrentSession().delete(booking);
 	}
+    
+    public void deleteBookingById(int id) {
+		Session currentSession = this.sessionFactory.getCurrentSession();
+		Booking booking = (Booking) currentSession.get(Booking.class, id);
+		currentSession.delete(booking);
+	}
+    
 }
