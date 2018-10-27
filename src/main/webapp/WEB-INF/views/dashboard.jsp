@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Page</title>
+<title>Dashboard Page</title>
 
 <link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
 <link href="resources/dashboard.css" rel="stylesheet">
