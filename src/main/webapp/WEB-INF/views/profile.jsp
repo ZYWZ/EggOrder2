@@ -1,6 +1,7 @@
 <% String path = request.getContextPath(); 
    String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/"; 
 %> 
+
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
@@ -8,7 +9,7 @@
 <base href="<%=basePath%>">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Calendar Page</title>
+<title>Profile Page</title>
 
 <link rel='stylesheet' href='resources/fullcalendar-3.9.0/fullcalendar.css' />
 <link href="resources/dashboard.css" rel="stylesheet">
@@ -49,6 +50,34 @@ p {
 
 </head>
 <body>
+
+
+<!-- Add booking Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4><span class="glyphicon glyphicon-lock"></span>Cancel this booking</h4>   
+        </div>
+        <div class="modal-body">
+          <form role="form" method="post" id="deleteForm">
+            <div class="form-group">
+              <label>Do you really want to cancel this booking?</label>
+            </div>
+            <hr/>
+            
+            <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-off"></span>Yes</button>
+          </form>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
+<!-- End of Add booking Modal -->
+
+
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
       <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="home">Egg Order System</a>
       </ul>
@@ -109,6 +138,7 @@ p {
             <h1 id="user_name_profile">Profile</h1>
           </div>
     <div>
+    
     <h4 id ="profile_name">Name:${profile_name}</h4>
     <h4 id = "profile_birthday">Birthday:${profile_birthday}</h4>
     <h4 id = "profile_email">Email:${profile_email}</h4>
@@ -145,13 +175,15 @@ p {
     <script>
     
     $(function() {
-    	var booking = ${result};
+    	/* var booking = ${result} */
     	var j = 0, k = 0;
-    	var oldBooking, newBooking;
+    	/* var oldBooking, newBooking; */
+    	
+    	
 		var oldBookingTable = document.getElementById("oldBooking"); 
 		var newBookingTable = document.getElementById("newBooking"); 
-		var currentTime = new Date();
-  		for(var i = 0; i < booking.length;i++){
+		
+  		/* for(var i = 0; i < booking.length;i++){
   			var result = booking[i].bookingDate;
   			/* if(result < currentTime){
   				oldBooking[j] = booking[i]
@@ -161,13 +193,16 @@ p {
   				newBooking[k] = booking[i];
   				k++;
   			} */
-  			oldBooking = booking;
-  		}
+  			/* oldBooking = booking;
+  		} */ 
   		
+  		
+  		var oldBooking = ${oldBooking}; 
   		createOldBookingTable(oldBookingTable,oldBooking);
-  		/* createNewBookingTable(newBookingTable,newBooking) */
+  		createNewBookingTable(newBookingTable,newBooking);
   		
   		function createOldBookingTable(body,booking){
+  			
   			var oldTable = document.getElementById("oldBooking"); 
   			var oldLen = oldTable.rows.length;
   			for (var i = 1; i < oldLen-1; i++) {
@@ -186,12 +221,13 @@ p {
 				newLine.insertCell(3).appendChild(s);
 				var btn = document.createElement("input");
 				btn.type = "button";
-				btn.id = oldBooking[i].classroomId;
-				btn.value = "View Comment";
+				btn.id = oldBooking[i].id;
+				btn.value = "Comment";
 				btn.onclick=function (){ 
 					 view(this.id);
 		              };
 		        newLine.insertCell(4).appendChild(btn);
+		        console.log(i);
 		  } 
   		}
 		function view(id){
@@ -201,6 +237,7 @@ p {
   		
   		
     function createNewBookingTable(body,booking){
+    	 var newBooking = ${newBooking};
   		 var newTable = document.getElementById("newBooking");
   		 var newLen = newTable.rows.length;
   		 var newBooking;
@@ -209,6 +246,7 @@ p {
   			newTable.deleteRow(1);
   		  }
   		
+  		 
   		for (var i = 0; i < newBooking.length; i++) {
 			  	var newBookingId = newBooking[i].id;
 		    	var newLine = body.insertRow(i);
@@ -222,13 +260,39 @@ p {
 				newLine.insertCell(3).appendChild(s);
 				var btn = document.createElement("input");
 				btn.type = "button";
-				btn.value = "View Comment";
+				btn.id =newBooking[i].id;
+				btn.line = i;
+				btn.value = "Cancel";
+				btn.type = "button";
 				btn.onclick=function (){ 
-					 cancel(newBookingId);
-		              };
+					 cancel(this.id,this.line);
+		              }; 
 		              newLine.insertCell(4).appendChild(btn);
 		  } 
   		}
+    
+    	function cancel(id,line){
+    		
+    		var flag = confirm("Do you want to cancel this booking?");
+        	if(flag){
+        		var myForm = document.createElement("form");
+        		myForm.method = "post";
+        		myForm.action = "./profile/delete/"+id;
+        		var myInput = document.createElement("input");
+        		myInput.setAttribute("booking_id",id);
+        		myForm.appendChild(myInput);
+        		
+        		document.body.appendChild(myForm);
+        		myForm.submit();
+        		document.body.removeChild(myForm);
+        	}else{
+        		
+        	}
+
+    		
+    		/* var newTable = document.getElementById("newBooking");
+    		newTable.deleteRow(line); */
+		} 
     })
     
     </script>
