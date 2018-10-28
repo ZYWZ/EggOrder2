@@ -76,9 +76,14 @@ public class CommentController {
         query.setInteger("classroomid", Id);
         List<Comment> result = (List<Comment>)query.list();
         String comment = new Gson().toJson(result);
+        String login_info = new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
+		login_info = login_info.replace("{","").replace("}","").replace("\"","").replace("student_id:","");
+		String student_id =login_info;
         model.addAttribute("comment", comment);
         model.addAttribute("classroomID", Id);
+        model.addAttribute("StudentID",student_id);
 //        request.getSession().getAttribute("USER_SESSION");
+//        System.out.print(student_id);
 		return "comment";
 	}
     
@@ -126,6 +131,38 @@ public class CommentController {
 		return "ViewComment";
 		
 	}
-    
+	@RequestMapping(value = "/AdminComment/{Id}", method = RequestMethod.GET)
+	public String AdminComment(Locale locale, HttpServletRequest request, Model model, HttpSession session,
+			@PathVariable int Id,User user){
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String formattedDate = dateFormat.format(date);
+		String login_info = new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
+		login_info = login_info.replace("{","").replace("}","").replace("\"","").replace("student_id:","");
+		String student_id =login_info;
+//        int classroom_id = Id;
+//        String comment = request.getParameter("comment");
+//        String score = request.getParameter("score");
+//        String post_time = formattedDate;
+		//commentService.PostComment(student_id,classroom_id,comment,score,post_time);
+        
+        Query query = sessionFactory.getCurrentSession().createQuery("from Comment b where b.classroom_id = :classroomid order by post_time desc");
+        query.setInteger("classroomid", Id);
+        List<Comment> result = (List<Comment>)query.list();
+        String comment = new Gson().toJson(result);
+        model.addAttribute("comment", comment);
+        model.addAttribute("classroomID", Id);
+        System.out.print(comment);
+		return "AdminComment";
+		
+	}
+	@RequestMapping(value = "/AdminComment/{Id}", method = RequestMethod.POST)
+	public String DeleteComment(Locale locale, HttpServletRequest request, Model model, HttpSession session,
+			@PathVariable int Id,User user){
+		int classroom_id = Id;
+		String student_id = request.getParameter("studentID");
+		commentService.DeleteComment(student_id,classroom_id);
+		return "redirect:/AdminComment/{Id}";
+	}
 }
 

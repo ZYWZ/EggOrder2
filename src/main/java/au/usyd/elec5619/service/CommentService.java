@@ -13,9 +13,8 @@ public class CommentService {
 		String sql = "INSERT INTO Rating values(?,?,?,?,?);";
 		jdbcTemplate.update(sql, new Object[] {student_id, classroom_id, comment, score, post_time});
 	}
-//	public int DeleteComment(String student_id, String classroom_id, String comment, String score){
-//		String sql = "delete from Rating WHERE student_id=? and classroom_id=?);";
-//		int result = jdbcTemplate.update(sql, new Object[] {student_id, classroom_id});
-//		return result;
-//	}
+	public void DeleteComment(String student_id, int classroom_id){
+		String sql = "DELETE FROM `Rating` WHERE (`student_id` = ?) and (`classroom_id` = ?);";
+		jdbcTemplate.update(sql, new Object[] {student_id, classroom_id});
+	}
 }

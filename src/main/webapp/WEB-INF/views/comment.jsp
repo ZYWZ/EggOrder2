@@ -201,7 +201,7 @@ display:none;
 }
 </style>
 <script>
-$(document).ready(function () {
+/* $(document).ready(function () {
 	var comment = ${comment};
 	var str ="";
  	for(i=0;i<comment.length;i++)
@@ -219,7 +219,19 @@ $(document).ready(function () {
 		} 
 	$('#cmt_main').html(str)
 	
-    });
+    }); */
+ $(document).ready(function () {
+	var comment = ${comment};
+	var StudentID=${StudentID};
+	for(i=0;i<comment.length;i++){
+		if(comment[i].student_id==StudentID){
+		alert("You have commented this room!");
+		window.location.href = "profile";
+			/* console.log(StudentID); */
+		break;
+		}
+	}
+}); 
 
 /* $(document).ready(function () {
 	var comment = ${comment};

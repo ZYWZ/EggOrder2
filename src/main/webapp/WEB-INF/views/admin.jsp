@@ -101,7 +101,7 @@
 	        }
 		 function view(id){
 			//跳转 删除comment 页面
-	            window.location.replace("ViewComment/"+id);
+	            window.location.replace("AdminComment/"+id);
 	        } 
 		 function deleteClassroom(id){
 			 
