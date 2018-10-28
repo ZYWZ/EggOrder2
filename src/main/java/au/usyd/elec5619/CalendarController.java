@@ -128,7 +128,7 @@ public class CalendarController {
         return "calendar";
     }
     
-    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST, params = {"startTime","finishTime"})
     public String AddEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime) {
         String st = startTime.toString().replaceAll("T", " ")+":00";
         String ft = finishTime.toString().replaceAll("T", " ")+":00";
@@ -149,24 +149,8 @@ public class CalendarController {
         return "redirect:"+Id;
     }
     
-    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.GET)
-    public String AdminHibernateQueryWithClassroomID(Locale locale, Model model, @PathVariable int Id) {
-        
-        // HQL (Hibernate Query Language)
-        Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
-        query.setInteger("classroomid", Id);
-        List<Booking> result = (List<Booking>)query.list();
-        
-        String json = new Gson().toJson(result);
-        logger.info("Welcome home! The client locale is {}.", json);
-        model.addAttribute("result", json);
-        model.addAttribute("classroomID", Id);
-        
-        return "AdminCalendar";
-    }
-    
-    @RequestMapping(value = "/changeEvent", method = RequestMethod.POST)
-    public String ChangeEvent(Locale locale, HttpServletRequest request,Model model, @RequestParam("bookingID") String bookingID, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime, @RequestParam("studentID") String studentID, @RequestParam("classroomID") String classroomID) {
+    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST, params = {"bookingID","startTime","finishTime","studentID","classroomID"})
+    public String ChangeEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("bookingID") String bookingID, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime, @RequestParam("studentID") String studentID, @RequestParam("classroomID") String classroomID) {
 		  System.out.println(bookingID);
 		  System.out.println(studentID);
 		  System.out.println(classroomID);
@@ -184,10 +168,37 @@ public class CalendarController {
 		
 		  bookingService.registerBooking(temp);
 		
-		  return "redirect:"+classroomID;
+		  return "redirect:"+Id;
     }
     
-    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST, params = {"bookingID"})
+    public String DeleteEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("bookingID") String bookingID) {
+		  System.out.println(bookingID);		  
+		  bookingService.deleteBookingByID(Integer.parseInt(bookingID));//delete booking   	     	  
+	
+		  return "redirect:"+Id;
+    }
+    
+    
+    
+    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.GET)
+    public String AdminHibernateQueryWithClassroomID(Locale locale, Model model, @PathVariable int Id) {
+        
+        // HQL (Hibernate Query Language)
+        Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
+        query.setInteger("classroomid", Id);
+        List<Booking> result = (List<Booking>)query.list();
+        
+        String json = new Gson().toJson(result);
+        logger.info("Welcome home! The client locale is {}.", json);
+        model.addAttribute("result", json);
+        model.addAttribute("classroomID", Id);
+        
+        return "AdminCalendar";
+    }
+    
+    
+    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.POST, params = {"bookingID","startTime","finishTime","studentID","classroomID"})
     public String AdminChangeEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("bookingID") String bookingID, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime, @RequestParam("studentID") String studentID, @RequestParam("classroomID") String classroomID) {
 		  System.out.println(bookingID);
 		  System.out.println(studentID);
@@ -205,6 +216,14 @@ public class CalendarController {
 		  temp.setFinishTime(finishTime.replace("T", " "));
 		
 		  bookingService.registerBooking(temp);
+		
+		  return "redirect:"+Id;
+    }
+    
+    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.POST, params = {"bookingID"})
+    public String AdminDeleteEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("bookingID") String bookingID) {
+		  System.out.println(bookingID);		  
+		  bookingService.deleteBookingByID(Integer.parseInt(bookingID));//delete old booking   	     	  		  
 		
 		  return "redirect:"+Id;
     }

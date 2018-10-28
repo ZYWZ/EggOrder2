@@ -42,13 +42,10 @@ function SearchOnClick() {
 	window.location.replace("calendar/"+classroomId);
 };
 
-/* function changeBooking(event) {
+function changeBooking(event) {
 	
 	var temp = document.createElement("form");
-
-	  
 	  temp.method = "post";
-	  temp.action = "EggOrder2/changeEvent"
 	  temp.style.display = "none";
 	  
 	  var bookingID = document.createElement("input");
@@ -79,7 +76,22 @@ function SearchOnClick() {
 	  document.body.appendChild(temp);
 	  temp.submit();
 	  return temp;
-} */
+}
+
+function deleteBooking(booking_ID){
+	var temp = document.createElement("form");
+	  temp.method = "post";
+	  temp.style.display = "none";
+	  
+	  var bookingID = document.createElement("input");
+	  bookingID.name = "bookingID";
+	  bookingID.value = booking_ID;
+	  temp.appendChild(bookingID);
+	  
+	  document.body.appendChild(temp);
+	  temp.submit();
+	  return temp;
+}
 
 
 $(function() {     
@@ -90,6 +102,7 @@ $(function() {
       for (var result in results) {
         //  alert("Value:" + results[result].studentId);
           event.push({
+        	  id: results[result].id,
         	  title: 'Study',
         	  start: results[result].startTime,
         	  end: results[result].finishTime,
@@ -112,15 +125,22 @@ $(function() {
 		  nowIndicator: true,
 		  events: event,
 		  eventRender: function(event, element, view){
-			    var Student = event.Student; 
-			    var Classroom = event.Classroom;			    
+			    var Student = event.student; 
+			    var Classroom = event.classroom;			    
 	      },
 	      eventMouseover: function(event){
-	    	    var Student = event.Student; 
-			    var Classroom = event.Classroom;
+	    	    var Student = event.student; 
+			    var Classroom = event.classroom;
 		  },
 		  eventClick: function(eventObj) {
 		      alert('Booked by Student : ' + eventObj.student);
+		      
+		      var curr = ${currentUser};
+		      if(curr == eventObj.student){
+			      if(confirm("Do you want to delete this booking?")){
+			    	  deleteBooking(eventObj.id);
+			      }
+		      }
 		  },
 		  eventDrop: function(event, delta, revertFunc) {
 			  var curr = ${currentUser};
