@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
@@ -106,7 +108,49 @@ public class CalendarController {
     }
     
     @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.GET)
-    public String hibernateQueryWithClassroomID(Locale locale, Model model, @PathVariable int Id) {
+    public String hibernateQueryWithClassroomID(Locale locale, HttpServletRequest request, Model model, @PathVariable int Id) {
+        
+    	String login_info = new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
+		login_info = login_info.replace("{","").replace("}","").replace("\"","").replace("student_id:","");
+		String student_id =login_info;
+    	
+        // HQL (Hibernate Query Language)
+        Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
+        query.setInteger("classroomid", Id);
+        List<Booking> result = (List<Booking>)query.list();
+        
+        String json = new Gson().toJson(result);
+        logger.info("Welcome home! The client locale is {}.", json);
+        model.addAttribute("result", json);
+        model.addAttribute("classroomID", Id);
+        model.addAttribute("currentUser", student_id);
+        
+        return "calendar";
+    }
+    
+    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST)
+    public String AddEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime) {
+        String st = startTime.toString().replaceAll("T", " ")+":00";
+        String ft = finishTime.toString().replaceAll("T", " ")+":00";
+        
+        String login_info = new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
+		login_info = login_info.replace("{","").replace("}","").replace("\"","").replace("student_id:","");
+		String student_id =login_info;
+        
+        Booking temp = new Booking();
+        temp.setStudentId(Integer.parseInt(student_id));
+        temp.setClassroomId(Id);
+        temp.setBookingDate(startTime.substring(0, 10));
+        temp.setStartTime(st);
+        temp.setFinishTime(ft);
+        
+        bookingService.registerBooking(temp);
+        
+        return "redirect:"+Id;
+    }
+    
+    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.GET)
+    public String AdminHibernateQueryWithClassroomID(Locale locale, Model model, @PathVariable int Id) {
         
         // HQL (Hibernate Query Language)
         Query query = sessionFactory.getCurrentSession().createQuery("from Booking b where b.classroomId = :classroomid");
@@ -118,23 +162,50 @@ public class CalendarController {
         model.addAttribute("result", json);
         model.addAttribute("classroomID", Id);
         
-        return "calendar";
+        return "AdminCalendar";
     }
     
-    @RequestMapping(value = "/calendar/{Id}", method = RequestMethod.POST)
-    public String AddEvent(Locale locale, Model model, @PathVariable int Id, @RequestParam("studentID") int studentID,@RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime) {
-        String st = startTime.toString().replaceAll("T", " ")+":00";
-        String ft = finishTime.toString().replaceAll("T", " ")+":00";
-        
-        Booking temp = new Booking();
-        temp.setStudentId(studentID);
-        temp.setClassroomId(Id);
-        temp.setBookingDate("2018-10-12");
-        temp.setStartTime(st);
-        temp.setFinishTime(ft);
-        
-        bookingService.registerBooking(temp);
-        
-        return "redirect:"+Id;
+    @RequestMapping(value = "/changeEvent", method = RequestMethod.POST)
+    public String ChangeEvent(Locale locale, HttpServletRequest request,Model model, @RequestParam("bookingID") String bookingID, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime, @RequestParam("studentID") String studentID, @RequestParam("classroomID") String classroomID) {
+		  System.out.println(bookingID);
+		  System.out.println(studentID);
+		  System.out.println(classroomID);
+		  System.out.println(startTime);
+		  System.out.println(finishTime);
+		  
+		  bookingService.deleteBookingByID(Integer.parseInt(bookingID));//delete old booking   	     	  
+		  
+		  Booking temp = new Booking();
+		  temp.setStudentId(Integer.parseInt(studentID));
+		  temp.setClassroomId(Integer.parseInt(classroomID));
+		  temp.setBookingDate(startTime.substring(0, 10));
+		  temp.setStartTime(startTime.replace("T", " "));
+		  temp.setFinishTime(finishTime.replace("T", " "));
+		
+		  bookingService.registerBooking(temp);
+		
+		  return "redirect:"+classroomID;
+    }
+    
+    @RequestMapping(value = "/AdminCalendar/{Id}", method = RequestMethod.POST)
+    public String AdminChangeEvent(Locale locale, HttpServletRequest request,Model model, @PathVariable int Id, @RequestParam("bookingID") String bookingID, @RequestParam("startTime") String startTime, @RequestParam("finishTime") String finishTime, @RequestParam("studentID") String studentID, @RequestParam("classroomID") String classroomID) {
+		  System.out.println(bookingID);
+		  System.out.println(studentID);
+		  System.out.println(classroomID);
+		  System.out.println(startTime);
+		  System.out.println(finishTime);
+		  
+		  bookingService.deleteBookingByID(Integer.parseInt(bookingID));//delete old booking   	     	  
+		  
+		  Booking temp = new Booking();
+		  temp.setStudentId(Integer.parseInt(studentID));
+		  temp.setClassroomId(Integer.parseInt(classroomID));
+		  temp.setBookingDate(startTime.substring(0, 10));
+		  temp.setStartTime(startTime.replace("T", " "));
+		  temp.setFinishTime(finishTime.replace("T", " "));
+		
+		  bookingService.registerBooking(temp);
+		
+		  return "redirect:"+Id;
     }
 }

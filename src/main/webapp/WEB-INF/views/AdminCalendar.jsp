@@ -42,13 +42,10 @@ function SearchOnClick() {
 	window.location.replace("calendar/"+classroomId);
 };
 
-/* function changeBooking(event) {
+function changeBooking(event) {
 	
 	var temp = document.createElement("form");
-
-	  
 	  temp.method = "post";
-	  temp.action = "EggOrder2/changeEvent"
 	  temp.style.display = "none";
 	  
 	  var bookingID = document.createElement("input");
@@ -79,8 +76,7 @@ function SearchOnClick() {
 	  document.body.appendChild(temp);
 	  temp.submit();
 	  return temp;
-} */
-
+}
 
 $(function() {     
       var event = [];
@@ -90,6 +86,7 @@ $(function() {
       for (var result in results) {
         //  alert("Value:" + results[result].studentId);
           event.push({
+        	  id: results[result].id,
         	  title: 'Study',
         	  start: results[result].startTime,
         	  end: results[result].finishTime,
@@ -109,6 +106,7 @@ $(function() {
 			  right:  'today prev,next',
 		  },
 		  editable: true,
+	      eventLimit: true,
 		  nowIndicator: true,
 		  events: event,
 		  eventRender: function(event, element, view){
@@ -123,17 +121,12 @@ $(function() {
 		      alert('Booked by Student : ' + eventObj.student);
 		  },
 		  eventDrop: function(event, delta, revertFunc) {
-			  var curr = ${currentUser};
-			  if(curr != event.student){
-				  alert("This is not your booking!");
-				  revertFunc();
-			  }else{
-				  if (!confirm("Are you sure about this change?")) {
-				      revertFunc();
-				  }else{
-				      changeBooking(event);
-				  }
-			  }
+				
+			    if (!confirm("Are you sure about this change?")) {
+			      revertFunc();
+			    }else{
+			    	changeBooking(event);
+			    }
 
 			  }
 	  	  /*select: function(startDate, endDate) {
@@ -257,7 +250,7 @@ $(document).ready(function() {
     	
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">             
           	<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">        		
-            	<h1 class="h2">Calendar for classroom ${classroomID}</h1>          	
+            	<h1 class="h2">Admin Calendar for classroom ${classroomID}</h1>          	
           	</div>
           	
  			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add a booking</button>
