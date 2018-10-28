@@ -1,16 +1,15 @@
 package au.usyd.elec5619;
 
+import java.util.List;
+
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import au.usyd.elec5619.domain.Admin;
@@ -26,6 +25,8 @@ public class AdminLoginController {
        return "adminlogin";
     }
 
+    @Resource(name="classroomManager")
+	private DatabaseClassroomManager classroomManager;
     
     @RequestMapping(value={"/adminloginProcess"})
     public String adminloginCheck(HttpServletRequest request,Model model, HttpSession session){
@@ -40,7 +41,9 @@ public class AdminLoginController {
        loginAdmin.setAdmin(admin_id);
        session.setAttribute("Admin_SESSION",loginAdmin);
 //       request.getSession().setAttribute("user",loginAdmin);
-       return "admin";
+       return "redirect:admin";
     }
+    
+    
     
 }

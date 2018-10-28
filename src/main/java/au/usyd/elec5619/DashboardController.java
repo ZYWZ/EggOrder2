@@ -99,7 +99,6 @@ public class DashboardController {
     public String hibernateQuery(Locale locale, Model model) {
         
         // HQL (Hibernate Query Language)
-    	Session currentSession = this.sessionFactory.getCurrentSession();
 //		Query query = currentSession.createQuery("from Classroom");
 //		List<Classroom> result = (List<Classroom>) query.list();
 //        String json = new Gson().toJson(result);

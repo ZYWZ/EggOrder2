@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import au.usyd.elec5619.dao.ClassroomDao;
 import au.usyd.elec5619.domain.Classroom;
 
-@Service(value="ClassroomService")
+@Service(value="classroomService")
 // @Transactional
 public class ClassroomService {
 
@@ -22,4 +22,7 @@ public class ClassroomService {
     	classroomDao.saveClassroom(classroom);
     }
     
+    public void deleteClassroomById(int id) {
+    	classroomDao.deleteClassroomById(id);
+	}
 }

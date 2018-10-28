@@ -50,7 +50,7 @@ tr:nth-child(even) {
       </ul> -->
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="#">Sign in</a>
+         <a class="nav-link" href="logout">Log out</a>
         </li>
       </ul>
     </nav>
