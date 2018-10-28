@@ -68,18 +68,26 @@ public class AnalyzeController {
 //		String sql = "SELECT count(*) FROM booking WHERE substring(startTime,1,2)=2;";
 //        Query query = sessionFactory.getCurrentSession().createQuery("SELECT count(*) from Booking where substr(startTime,1,2) = :classroomid");
 //        query.setInteger("classroomid", 2);
-//        List<Classroom> result = (List<Classroom>)query.list();
+//        List<Booking> result = (List<Booking>)query_8.list();
 //        String json = new Gson().toJson(result);
-//		String[] BBT_List = new String[13];
-//		BBT_List = AnalyzeDao.getAnalyzeBBT();
-//		model.addAttribute("BBT", BBT_List);
-		int[][] CC_List = new int[20][2];
+		int[] BBT_List = new int[13];
+		BBT_List = analyzeDao.getAnalyzeBBT();
+		String json_1 = new Gson().toJson(BBT_List);
+		model.addAttribute("BBT", json_1);
+		
+		int[][] RC_List;
+		RC_List = analyzeDao.getAnalyzeRC();
+		String json_2 = new Gson().toJson(RC_List);
+		model.addAttribute("RC", json_2);
+		
+		int[][] CC_List;
 		CC_List = analyzeDao.getAnalyzeCC();
-		model.addAttribute("CC", CC_List);
+		String json_3 = new Gson().toJson(CC_List);
+		model.addAttribute("CC", json_3);
 //		String result[][] = {{"Year", "Sales"},{"2004",  "1000"},
 //				{"2005",  "1170"},{"2006",  "660"},{"2007",  "1030"}};
 //		String json = new Gson().toJson(result);
-//	    System.out.println(result.get(0));
+	    System.out.println(json_2);
 //		model.addAttribute("Result", json);
 		return "analyze";
 	}

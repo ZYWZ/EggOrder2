@@ -8,12 +8,12 @@
 <base href="<%=basePath%>">
 <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Analyze Page</title>
+<title>Calendar Page</title>
 
 <!-- Google Chart -->
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
@@ -78,7 +78,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="dashboard">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/elec5619">Egg Order System</a>
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
@@ -116,12 +116,12 @@
                   Profile
                 </a>
               </li>
-             <!--  <li class="nav-item">
+              <li class="nav-item">
                 <a class="nav-link" href="comment">
                   <span data-feather="layers"></span>
                   Comment
                 </a>
-              </li>    -->      
+              </li>         
             <li class="nav-item">
                 <a class="nav-link active" href="analyze">
                   <span data-feather="bar-chart-2"></span>
@@ -145,7 +145,22 @@
 			</nav>
 <div class="page1 page" id="bbt_chart"><h1 class="h2"></h1></div>
 
-<div class="page2 page" id="rc_chart"><h1 class="h2"></h1></div>
+<div class="page2 page" id="rc_chart"><h1 class="h2"></h1>
+<a>ClassroomId</a>
+<select id=cid>
+       <option value=1>1</option>
+       <option value=2>2</option>
+       <option value=3>3</option>
+       <option value=4>4</option>
+       <option value=5>5</option>
+       <option value=6>6</option>
+       <option value=7>7</option>
+       <option value=8>8</option>
+       <option value=9>9</option>
+</select>
+<button id="rc_show_button">Show</button>
+<div id="rc_showchart"><h1 class="h2"></h1></div>
+</div>
 
 <div class="page3 page" id="cc_chart"><h1 class="h2"></h1></div>
     
@@ -175,55 +190,67 @@ $(document).ready(function() {
 });
 </script>
 <script>
-google.charts.load('current', {'packages': ['bar']});
-google.charts.load('current', {'packages':['corechart']});
 
 $(document).ready(function () {
     $("#bbt_button").click(function (event) {
           event.preventDefault();
-          var result=${Result}; 
+       	  var bbt_list=${BBT};
           var data = [
-            [result[0][0],  result[0][1]],
-            [result[1][0],  Number(result[1][1])],
-            [result[2][0],  Number(result[2][1])],
-            [result[3][0],  Number(result[3][1])],
-            [result[4][0],  Number(result[4][1])]
-          ]  
+        	['Time',  'Booking Number'],
+            ['08:00',  Number(bbt_list[0])],
+            ['09:00',  Number(bbt_list[1])],
+            ['10:00',  Number(bbt_list[2])],
+            ['11:00',  Number(bbt_list[3])],
+            ['12:00',  Number(bbt_list[4])],
+            ['13:00',  Number(bbt_list[5])],
+            ['14:00',  Number(bbt_list[6])],
+            ['15:00',  Number(bbt_list[7])],
+            ['16:00',  Number(bbt_list[8])],
+            ['17:00',  Number(bbt_list[9])],
+            ['18:00',  Number(bbt_list[10])],
+            ['19:00',  Number(bbt_list[11])],
+            ['20:00',  Number(bbt_list[12])]
+          ];
          draw_firChart(data)
     })
 });
 
 $(document).ready(function () {
-    $("#rc_button").click(function (event) {
+    $('#rc_show_button').click(function (event) {
           event.preventDefault();
-          var result=${Result}; 
-          var data = [
-            [result[0][0],  result[0][1]],
-            [result[1][0],  Number(result[1][1])],
-            [result[2][0],  Number(result[2][1])],
-            [result[3][0],  Number(result[3][1])],
-            [result[4][0],  Number(result[4][1])]
-          ]  
-         draw_secChart(data)
+          var rc_list =${RC};
+          var cid = $('#cid').val();
+           for(i=0;i<rc_list.length;i++){
+        	  if(Number(rc_list[i][0])==Number(cid)){
+        		  var rc = new Array();
+        		  rc[0] = ['score', 'number'];
+        		  rc[1]=['1', rc_list[i][1]];
+        		  rc[2]=['2', rc_list[i][2]];
+        		  rc[3]=['3', rc_list[i][3]];
+        		  rc[4]=['4', rc_list[i][4]];
+        		  rc[5]=['5', rc_list[i][5]];
+        		  
+        		  draw_secChart(rc)
+        	  }
+          }
     })
 });
 
 $(document).ready(function () {
     $("#cc_button").click(function (event) {
           event.preventDefault();
-          var result=${Result}; 
-          var data = [
-            [result[0][0],  result[0][1]],
-            [result[1][0],  Number(result[1][1])],
-            [result[2][0],  Number(result[2][1])],
-            [result[3][0],  Number(result[3][1])],
-            [result[4][0],  Number(result[4][1])]
-          ]  
-         draw_thirdChart(data)
+          var cc_list=${CC};
+          var cc = new Array();
+          cc[0]=['ClassroomID','Score'];
+          for(i=0;i<cc_list.length;i++){
+        	  cc[i+1] = cc_list[i];
+          }
+          var data = cc;
+		draw_thirdChart(data)
     })
 });
- 
- function draw_firChart(data) {
+
+function draw_firChart(data) {
     var real_data = google.visualization.arrayToDataTable(data);
     var options = {
         title: 'Booking Peak-Time',
@@ -236,32 +263,32 @@ $(document).ready(function () {
 
     chart.draw(real_data, options);
 }
- 
- function draw_secChart(data) {
-	    var real_data = google.visualization.arrayToDataTable(data);
-	    var options = {
-	        title: 'Rating Contribution',
-	        legend: { position: 'bottom'},
-	        width:1100,
-	        height:600
-	    };
-	    var chart = new google.visualization.BarChart(document.getElementById('rc_chart'));
 
-	    chart.draw(real_data, options);
-	}
- 
- function draw_thirdChart(data) {
-	    var real_data = google.visualization.arrayToDataTable(data);
-	    var options = {
-	        title: 'Classroom Comparison',
-	        legend: { position: 'bottom'},
-	        width:1100,
-	        height:600
-	    };
-	    var chart = new google.visualization.BarChart(document.getElementById('cc_chart'));
+function draw_secChart(data) {
+    var real_data = google.visualization.arrayToDataTable(data);
+    var options = {
+        title: 'Rating Contribution',
+        legend: { position: 'bottom'},
+        width:1100,
+        height:600
+    };
+    var chart = new google.visualization.BarChart(document.getElementById('rc_showchart'));
 
-	    chart.draw(real_data, options);
-	}
+    chart.draw(real_data, options);
+}
+
+function draw_thirdChart(data) {
+    var real_data = google.visualization.arrayToDataTable(data);
+    var options = {
+        title: 'Classroom Comparison',
+        legend: { position: 'bottom'},
+        width:1100,
+        height:600
+    };
+    var chart = new google.visualization.ColumnChart(document.getElementById('cc_chart'));
+
+    chart.draw(real_data, options);
+}
 </script>
 </body>
 </html>
