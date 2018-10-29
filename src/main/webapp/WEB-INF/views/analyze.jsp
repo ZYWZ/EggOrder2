@@ -114,14 +114,7 @@
                 <a class="nav-link" href="#">
                   <span data-feather="users"></span>
                   Profile
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="comment">
-                  <span data-feather="layers"></span>
-                  Comment
-                </a>
-              </li>         
+                </a>  
             <li class="nav-item">
                 <a class="nav-link active" href="analyze">
                   <span data-feather="bar-chart-2"></span>

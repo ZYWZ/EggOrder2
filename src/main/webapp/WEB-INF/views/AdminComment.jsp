@@ -62,12 +62,7 @@
                   Profile
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="comment">
-                  <span data-feather="layers"></span>
-                  Comment
-                </a>
-              </li>         
+                     
             <li class="nav-item">
                 <a class="nav-link" href="analyze">
                   <span data-feather="bar-chart-2"></span>
