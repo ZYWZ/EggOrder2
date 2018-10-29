@@ -22,7 +22,7 @@
   <link href="resources/dashboard.css" rel="stylesheet">
 </head>
 <body>
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/elec5619">Egg Order System</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Egg Order System</a>
       
     <hr/>
     
@@ -97,7 +97,7 @@
 		
 		 function book(id){
 			 //跳转 删除booking 页面
-	            window.location.replace("calendar/"+id);
+	            window.location.replace("AdminCalendar/"+id);
 	        }
 		 function view(id){
 			//跳转 删除comment 页面
