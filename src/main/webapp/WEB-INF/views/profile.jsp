@@ -72,7 +72,7 @@ p {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="calendar">
+                <a class="nav-link" href="calendar/1">
                   <span data-feather="calendar"></span>
                   Calendar
                 </a>
