@@ -12,16 +12,20 @@ import au.usyd.elec5619.domain.Booking;
 @Service(value="bookingService")
 // @Transactional
 public class BookingService {
+	private List<Booking> bookings;
 
     @Autowired
     private BookingDao bookingDao;
     
-    // business logic of registering a Person into the database
+    public List<Booking> getBookings() {
+    	return bookings;
+    }
+    
+    public void setBookings(List<Booking> bookings) {
+    	this.bookings = bookings;
+    }
+    
     public void registerBooking(Booking booking) {
-        
-        // Step 1: check whether this person is already in the database
-        
-        // Step 2: if not, save this person into the database
         bookingDao.saveBooking(booking);
     }
     
