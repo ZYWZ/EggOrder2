@@ -75,15 +75,15 @@ p {
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="calendar">
+                <a class="nav-link" href="calendar/1">
                   <span data-feather="calendar"></span>
-                  Calendar <span class="sr-only">(current)</span>
+                  Calendar 
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="map">
                   <span data-feather="map"></span>
-                  Map
+                  Map <span class="sr-only">(current)</span>
                 </a>
               </li>
               <li class="nav-item">
