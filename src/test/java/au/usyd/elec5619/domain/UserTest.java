@@ -13,7 +13,7 @@ private User user ;
 		String testId = "111111";
 		assertNull(user.getStudentId());
 		user.setStudentId(testId);
-		assertEquals(testId, user.getStudentId(),0);
+		assertEquals(testId, user.getStudentId());
 	}
 	
 	public void testSetAndGetUserFullName() {
