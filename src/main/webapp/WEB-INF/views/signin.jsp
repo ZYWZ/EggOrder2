@@ -86,12 +86,16 @@
     }
 
     #page-signin-forgot-form { display: none; }
+    
+    #err_msg{
+    color:#FF0000;
+    }
   </style>
   <!-- / Custom styling -->
 </head>
 <body>
   <div class="page-signin-header p-a-2 text-sm-center bg-white">
-    <a class="px-demo-brand px-demo-brand-lg text-default" href="index.html"><span class="px-demo-logo bg-primary m-t-0"><span class="px-demo-logo-1"></span><span class="px-demo-logo-2"></span><span class="px-demo-logo-3"></span><span class="px-demo-logo-4"></span><span class="px-demo-logo-5"></span><span class="px-demo-logo-6"></span><span class="px-demo-logo-7"></span><span class="px-demo-logo-8"></span><span class="px-demo-logo-9"></span></span>EggOrder</a>
+    <a class="px-demo-brand px-demo-brand-lg text-default" href="signin"><span class="px-demo-logo bg-primary m-t-0"><span class="px-demo-logo-1"></span><span class="px-demo-logo-2"></span><span class="px-demo-logo-3"></span><span class="px-demo-logo-4"></span><span class="px-demo-logo-5"></span><span class="px-demo-logo-6"></span><span class="px-demo-logo-7"></span><span class="px-demo-logo-8"></span><span class="px-demo-logo-9"></span></span>EggOrder</a>
     <a href="signup" class="btn btn-primary">Sign Up</a>
   </div>
 
@@ -100,13 +104,14 @@
   <div class="page-signin-container" id="page-signin-form">
     <h2 class="m-t-0 m-b-4 text-xs-center font-weight-semibold font-size-20">Sign In to your Account</h2>
 
-    <form action="signinProcess" class="panel p-a-4" method="POST">
+    <form action="signin" class="panel p-a-4" method="POST">
       <fieldset class=" form-group form-group-lg">
         <input type="text" class="form-control" name="student_id" placeholder="StudentId">
       </fieldset>
 
       <fieldset class=" form-group form-group-lg">
         <input type="password" class="form-control" name="password" placeholder="Password">
+        <span id="err_msg"></span>
       </fieldset>
 
       <div class="clearfix">
@@ -124,9 +129,9 @@
     <h4 class="m-y-3 text-xs-center font-weight-semibold text-muted">or sign in with</h4>
 
     <div class="text-xs-center">
-      <a href="index.html" class="page-signin-social-btn btn btn-success btn-rounded" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;&nbsp;
-      <a href="index.html" class="page-signin-social-btn btn btn-info btn-rounded" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a>&nbsp;&nbsp;&nbsp;
-      <a href="index.html" class="page-signin-social-btn btn btn-danger btn-rounded" data-toggle="tooltip" title="Google+"><i class="fa fa-google-plus"></i></a>
+      <a href="signin" class="page-signin-social-btn btn btn-success btn-rounded" data-toggle="tooltip" title="Facebook"><i class="fa fa-facebook"></i></a>&nbsp;&nbsp;&nbsp;
+      <a href="signin" class="page-signin-social-btn btn btn-info btn-rounded" data-toggle="tooltip" title="Twitter"><i class="fa fa-twitter"></i></a>&nbsp;&nbsp;&nbsp;
+      <a href="signin" class="page-signin-social-btn btn btn-danger btn-rounded" data-toggle="tooltip" title="Google+"><i class="fa fa-google-plus"></i></a>
     </div>
   </div>
 
@@ -163,31 +168,12 @@
   <script src="resources/assets/js/bootstrap.min.js"></script>
   <script src="resources/assets/js/pixeladmin.min.js"></script>
 
-  <script>
-    // -------------------------------------------------------------------------
-    // Initialize DEMO sidebar
-
-    $(function() {
-      pxDemo.initializeDemoSidebar();
-
-      $('#px-demo-sidebar').pxSidebar();
-      pxDemo.initializeDemo();
-    });
-  </script>
 
   <script>
     // -------------------------------------------------------------------------
     // Initialize page components
 
     $(function() {
-      pxDemo.initializeBgsDemo('body', 0, '#000', function(isBgSet) {
-        $('h2')[isBgSet ? 'addClass' : 'removeClass']('text-white font-weight-bold');
-
-        $('h4')
-          .addClass(isBgSet ? 'text-white' : 'text-muted')
-          .removeClass(isBgSet ? 'text-muted' : 'text-white');
-      });
-
       $('#page-signin-forgot-link').on('click', function(e) {
         e.preventDefault();
 
@@ -209,5 +195,15 @@
       $('[data-toggle="tooltip"]').tooltip();
     });
   </script>
+  
+    <script>
+    $(document).ready(function () {
+    	var msg='${msg}';
+    	if(msg!='')
+    		{
+    		$("#err_msg").html(msg)
+    		}
+    });
+    </script>
 </body>
 </html>

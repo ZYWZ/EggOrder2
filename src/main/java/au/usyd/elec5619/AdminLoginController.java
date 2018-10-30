@@ -39,7 +39,7 @@ public class AdminLoginController {
        }
        Admin loginAdmin = new Admin();
        loginAdmin.setAdmin(admin_id);
-       session.setAttribute("Admin_SESSION",loginAdmin);
+       session.setAttribute("ADMIN_SESSION",loginAdmin);
 //       request.getSession().setAttribute("user",loginAdmin);
        return "redirect:admin";
     }

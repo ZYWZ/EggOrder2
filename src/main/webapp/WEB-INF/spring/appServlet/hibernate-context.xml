@@ -77,27 +77,17 @@
        p:dataSource-ref="dataSource"></bean>
       
      <mvc:interceptors>
-      <!--  <bean class="cn.lzc.interceptor.CustomInterceptor"></bean>--><!--拦截所有请求-->
-<!--         <mvc:interceptor>
-            <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/" /><&lt;!&ndash;配置了mapping 这个 将不再起作用&ndash;&gt;
-            <bean class="cn.lzc.interceptor.CustomInterceptor"></bean>
-        </mvc:interceptor> -->
-        
-        <!--<mvc:interceptor>-->
-           <!--<mvc:mapping path="/hello" />&lt;!&ndash;配置拦截hello结尾的&ndash;&gt;-->
-            <!--<bean class="cn.lzc.interceptor.CustomInterceptor"/>-->
-        <!--</mvc:interceptor>-->
-        
-        <!--登录拦截器-->
         <mvc:interceptor>
-            <mvc:mapping path="/home"/>
+            <mvc:mapping path="/home/**"/>
 	    	<mvc:mapping path="/calendar/**"/>
 	    	<mvc:mapping path="/analyze/**"/>
 	    	<mvc:mapping path="/comment/**"/>
 	    	<mvc:mapping path="/map/**"/>
+	    	<mvc:mapping path="/dashboard/**"/>
+	    	<mvc:mapping path="/admin/**"/>
             <bean class="au.usyd.elec5619.service.LoginInterceptor"/>
         </mvc:interceptor>
+        
     </mvc:interceptors>
       
        <!-- 通过AOP配置提供事务增强，让service包下所有Bean的所有方法拥有事务 -->
