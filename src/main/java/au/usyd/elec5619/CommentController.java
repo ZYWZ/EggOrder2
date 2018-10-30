@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-//import au.usyd.elec5619.dao.CommentDao;
 import au.usyd.elec5619.domain.Comment;
 import au.usyd.elec5619.domain.User;
 
@@ -38,7 +37,6 @@ import au.usyd.elec5619.dao.CommentDao;
 import au.usyd.elec5619.domain.Booking;
 import au.usyd.elec5619.domain.Comment;
 import au.usyd.elec5619.service.BookingService;
-import au.usyd.elec5619.service.CommentService;
 
 /**
  * Handles requests for the application home page.
