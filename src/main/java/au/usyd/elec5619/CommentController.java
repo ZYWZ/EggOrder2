@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 
 import au.usyd.elec5619.dao.BookingDao;
+import au.usyd.elec5619.dao.CommentDao;
 import au.usyd.elec5619.domain.Booking;
 import au.usyd.elec5619.domain.Comment;
 import au.usyd.elec5619.service.BookingService;
@@ -47,10 +48,10 @@ import au.usyd.elec5619.service.CommentService;
 public class CommentController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-	@Autowired
-	private CommentService commentService;
     @Autowired
     private SessionFactory sessionFactory;
+    @Autowired
+    private CommentDao commentDao;
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 //	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
@@ -102,7 +103,7 @@ public class CommentController {
         String comment = request.getParameter("comment");
         String score = request.getParameter("score");
         String post_time = formatDate;
-		commentService.PostComment(student_id,classroom_id,comment,score,post_time);
+		commentDao.PostComment(student_id,classroom_id,comment,score,post_time);
 		return "redirect:/profile";
 		
 	}
@@ -161,7 +162,7 @@ public class CommentController {
 			@PathVariable int Id,User user){
 		int classroom_id = Id;
 		String student_id = request.getParameter("studentID");
-		commentService.DeleteComment(student_id,classroom_id);
+		commentDao.DeleteComment(student_id,classroom_id);
 		return "redirect:/AdminComment/{Id}";
 	}
 }
