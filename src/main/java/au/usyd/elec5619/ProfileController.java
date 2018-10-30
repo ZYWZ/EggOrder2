@@ -45,6 +45,7 @@ import au.usyd.elec5619.domain.Classroom;
 import au.usyd.elec5619.domain.User;
 import au.usyd.elec5619.service.BookingService;
 import au.usyd.elec5619.service.ClassroomService;
+import au.usyd.elec5619.service.UserService;
 
 /**
  * Handles requests for the application home page.
@@ -62,7 +63,12 @@ public class ProfileController {
 		
 		return null;
 	} 
+	@Resource(name="userService")
+	private UserService userService;
 	
+	@Resource(name="bookingService")
+	private BookingService bookingService;
+   
 	 @Autowired
 	    private SessionFactory sessionFactory;
 	    @RequestMapping(value = "/profile", method = RequestMethod.GET)
@@ -71,14 +77,17 @@ public class ProfileController {
 	    	String login_info= new Gson().toJson(request.getSession().getAttribute("USER_SESSION"));
 	    	login_info = login_info.replace("{", "").replace("}", "").replace("\"", "").replace("student_id:", "");
 	    	int profile_id = Integer.parseInt(login_info);
-	        Query query1 = sessionFactory.getCurrentSession().createQuery("from User s where s.student_id = :student_id");
-	        query1.setInteger("student_id", profile_id);
-	        List<User> profile_user = (List<User>)query1.list();
+//	        Query query1 = sessionFactory.getCurrentSession().createQuery("from User s where s.student_id = :student_id");
+//	        query1.setInteger("student_id", profile_id);
+//	        List<User> profile_user = (List<User>)query1.list();
+	    	List<User> profile_user = userService.getUserById(profile_id);
 	    	
-	    	Session currentSession = this.sessionFactory.getCurrentSession();
-			Query query2 = currentSession.createQuery("from Booking b where b.studentId = :studentId");
-			query2.setInteger("studentId", profile_id);
-			List<Booking> result = (List<Booking>) query2.list();
+//	    	Session currentSession = this.sessionFactory.getCurrentSession();
+//			Query query2 = currentSession.createQuery("from Booking b where b.studentId = :studentId");
+//			query2.setInteger("studentId", profile_id);
+//			List<Booking> result = (List<Booking>) query2.list();
+			
+	    	List<Booking> result = bookingService.getBookingByStudentId(profile_id);
 			
 			List<Booking> oldBooking = new ArrayList<Booking>();
 			List<Booking>newBooking = new ArrayList<Booking>();
@@ -116,9 +125,7 @@ public class ProfileController {
 	        return "profile";
 	    }
 	    
-	    @Resource(name="bookingService")
-		private BookingService bookingService;
-	   
+	    
 	    @RequestMapping(value = "/profile/delete/{Id}", method = RequestMethod.POST)
 	    public String hibernateDelete(HttpServletRequest request, Model model, HttpSession session,Locale locale,@PathVariable int Id) {
 	    	

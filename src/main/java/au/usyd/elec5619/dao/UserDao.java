@@ -1,5 +1,11 @@
 package au.usyd.elec5619.dao;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -9,6 +15,9 @@ import au.usyd.elec5619.domain.User;
 
 @Repository//springע�ⶨ��һ��dao
 public class UserDao {
+	@Resource
+    private SessionFactory sessionFactory;
+
 	@Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -37,6 +46,13 @@ public class UserDao {
         int result = jdbcTemplate.queryForInt(sql, new Object[]{admin_id,password});
         return result;
      }
+    
+    public List<User> getUserById(int id) {
+    	Query query1 = sessionFactory.getCurrentSession().createQuery("from User s where s.student_id = :student_id");
+        query1.setInteger("student_id", id);
+        List<User> user = (List<User>)query1.list();
+        return user;
+	}
 }
 
 

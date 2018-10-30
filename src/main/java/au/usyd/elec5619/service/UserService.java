@@ -1,4 +1,6 @@
 package au.usyd.elec5619.service;
+import java.util.List;
+
 //
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -6,7 +8,7 @@ import org.springframework.stereotype.Service;
 import au.usyd.elec5619.dao.UserDao;
 import au.usyd.elec5619.domain.User;
  
-@Service//��עΪ������bean
+@Service(value="userService")//��עΪ������bean
 public class UserService {
     @Autowired
     private UserDao userDao;
@@ -30,4 +32,7 @@ public class UserService {
         return userDao.getAdminMatchCount(admin_id,password)>0;
      }
    
+    public List<User> getUserById(int id) {
+    	return userDao.getUserById(id);
+	}
 }

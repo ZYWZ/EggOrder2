@@ -1,5 +1,7 @@
 package au.usyd.elec5619.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,11 @@ public class BookingService {
     
     public void deleteBookingByID(int id) {
 		bookingDao.deleteBookingById(id);
+	}
+    
+    
+    public List<Booking> getBookingByStudentId(int id) {
+		return bookingDao.getBookingByStudentId(id);
 	}
     
 }
