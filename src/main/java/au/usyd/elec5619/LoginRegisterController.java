@@ -19,7 +19,7 @@ import au.usyd.elec5619.domain.User;
 //import au.usyd.elec5619.domain.Login;
 import au.usyd.elec5619.service.UserService;
  
-@Controller//标注成为spring mvc 的Controller类
+@Controller//
 public class LoginRegisterController {
     @Autowired
     private UserService userService;
@@ -41,11 +41,11 @@ public class LoginRegisterController {
 //       if(!b){
 //         return"user error";
 //       }
-//     return"user ok";
+//     return"user ok";POST
 //    }
 
     
-    @RequestMapping(value={"/signinProcess"})
+    @RequestMapping(value={"/signin"}, method = RequestMethod.POST)
     public String loginCheck(HttpServletRequest request,Model model, HttpSession session){
        String student_id =request.getParameter("student_id");
        String password = request.getParameter("password");
@@ -84,9 +84,8 @@ public class LoginRegisterController {
     
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session){
-        //清除session
+
         session.invalidate();
-        //重定向到登录页面的跳转方法
         return "redirect:signin";
     }
 }
